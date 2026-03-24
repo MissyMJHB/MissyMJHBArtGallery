@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery | Missy Art Gallery</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="gallery-page">
+  <div class="gallery-bg"></div>
+  <header class="gallery-header-clean">
+    <h1 class="site-title" id="animatedTitle">Missy Art Gallery</h1>
+    <nav class="gallery-nav-clean">
+      <a href="index.html" class="nav-link" id="homeLink">Home</a>
+      <a href="#" class="nav-link" id="aboutLink">About the Artist</a>
+      <a href="#" class="nav-link" id="contactLink">Contact the Artist</a>
+    </nav>
+  </header>
+  <section class="gallery-section">
+    <h2>Artworks</h2>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </section>
+  <!-- Modal for full image view -->
+  <div class="modal" id="imageModal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImg" />
+  </div>
+  <button id="backToTop" title="Back to Top">&#8679;</button>
+  <script src="home-anim.js"></script>
+  <script src="gallery.js"></script>
+  <script>
+    // Nav link handlers for gallery page
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('aboutLink').onclick = function(e) {
+        e.preventDefault();
+        window.openAboutMe && window.openAboutMe();
+      };
+      // Contact link opens modal (shared with home)
+      document.getElementById('contactLink').onclick = function(e) {
+        e.preventDefault();
+        // Try to open the contact modal from home page if available
+        if (window.openContactModal) {
+          window.openContactModal();
+        } else {
+          // Fallback: show a simple modal or alert
+          alert('Contact modal not available on this page. Please visit the Home page.');
+        }
+      };
+    });
+  </script>
+</body>
+</body>
+<!-- Missy Assistant Widget -->
+<div class="missy-corner-widget" id="missyCornerWidget">
+  <img src="Book/MissyCutOut.png" alt="Missy" class="missy-corner-img" id="missyCornerImg" style="cursor:pointer;" />
+  <div class="missy-corner-bubble" id="missyCornerBubble"></div>
+</div>
+<script>
+  // Random bubble logic
+  const bubbleImgs = [
+    'Book/BubbleHi.png',
+    'Book/BubbleClick.png',
+    'Book/BubblePretty.png',
+    'Book/BubblePeaceful.png',
+    'Book/BubbleShowAround.png',
+    'Book/BubbleFeelFree.png'
+  ];
+  const bubbleMsgs = [
+    "Hi! Welcome to the gallery!",
+    "Click me for a surprise!",
+    "Pretty, isn't it? I did this just for you. I hope you like it. – MJH",
+    "It's so peaceful here.",
+    "Let me show you around!",
+    "Feel free to explore!"
+  ];
+  const idx = Math.floor(Math.random() * bubbleImgs.length);
+  const bubble = document.getElementById('missyCornerBubble');
+  bubble.style.backgroundImage = `url('${bubbleImgs[idx]}')`;
+  bubble.textContent = bubbleMsgs[idx];
+  // Missy click random page
+  document.getElementById('missyCornerImg').addEventListener('click', function(e) {
+    e.preventDefault();
+    const pages = [
+      { url: 'index.html', name: 'Home' },
+      { url: 'gallery.html', name: 'Gallery' },
+      { url: 'book-page.html', name: 'Book' },
+      { url: 'aboutme/AboutMe.html', name: 'About Me' }
+    ];
+    const current = window.location.pathname.split('/').pop().toLowerCase();
+    const filtered = pages.filter(p => !current.includes(p.url.toLowerCase()));
+    const pick = filtered[Math.floor(Math.random() * filtered.length)];
+    window.location.href = pick.url;
+  });
+</script>
+<script>
+  // Random bubble logic
+  const bubbleImgs = [
+    'Book/BubbleHi.png',
+    'Book/BubbleClick.png',
+    'Book/BubblePretty.png',
+    'Book/BubblePeaceful.png',
+    'Book/BubbleShowAround.png',
+    'Book/BubbleFeelFree.png'
+  ];
+  const bubbleMsgs = [
+    "Hi! Welcome to the gallery!",
+    "Click me for a surprise!",
+    "Pretty, isn't it? I did this just for you. I hope you like it. – MJH",
+    "It's so peaceful here.",
+    "Let me show you around!",
+    "Feel free to explore!"
+  ];
+  const idx = Math.floor(Math.random() * bubbleImgs.length);
+  const bubble = document.getElementById('missyCornerBubble');
+  bubble.style.backgroundImage = `url('${bubbleImgs[idx]}')`;
+  bubble.textContent = bubbleMsgs[idx];
+
+  document.getElementById('missyCornerImg').addEventListener('click', function(e) {
+    e.preventDefault();
+    // Pick a random page (excluding current page)
+    const pages = [
+      { url: 'index.html', name: 'Home' },
+      { url: 'gallery.html', name: 'Gallery' },
+      { url: 'book-page.html', name: 'Book' },
+      { url: 'aboutme/AboutMe.html', name: 'About Me' }
+    ];
+    const current = window.location.pathname.split('/').pop().toLowerCase();
+    const filtered = pages.filter(p => !current.includes(p.url.toLowerCase()));
+    const pick = filtered[Math.floor(Math.random() * filtered.length)];
+    window.location.href = pick.url;
+  });
+</script>
+</html>

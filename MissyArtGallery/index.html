@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<!-- 1442:0324 -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Art Gallery</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="home-bg">
+      <div class="color-reveal"></div>
+      <div class="home-overlay home-overlay-top">
+        <h1 class="site-title" id="animatedTitle">Missy Art Gallery</h1>
+        <div class="site-subtitle" id="animatedSubtitle">Make your day brighter</div>
+        <div class="missy-area">
+          <a href="book-page.html" id="missyLink" class="missy-link">
+            <img src="Book/MissyCutOut.png" alt="Missy" id="missyImg" class="missy-img" />
+            <img src="Book/BubbleHi.png" alt="Hi" id="bubbleHi" class="missy-bubble" style="display:none;" />
+            <img src="Book/BubbleClick.png" alt="Click" id="bubbleClick" class="missy-bubble" style="display:none;" />
+            <img src="Book/Comeon.png" alt="Comeon" id="bubbleComeon" class="missy-bubble" style="display:none;" />
+            <img src="Book/BubblePretty.png" alt="Pretty" id="bubblePretty" class="missy-bubble" style="display:none;" />
+          </a>
+        </div>
+        <nav class="home-nav">
+          <a href="gallery.html" class="nav-link" id="galleryLink">Gallery</a>
+          <a href="#" class="nav-link" id="aboutLink">About the Artist</a>
+          <a href="#" class="nav-link" id="contactLink">Contact the Artist</a>
+          <!-- Contact the Artist Modal -->
+          <div class="modal" id="contactModal" style="display:none;align-items:center;justify-content:center;">
+            <span class="close" id="closeContactModal" style="z-index:2;">&times;</span>
+            <div class="contact-modal-content">
+              <img src="AboutMe/ContactMe.png" alt="Contact background" class="contact-modal-img" />
+              <div class="contact-info-box">
+                <h2>Contact the Artist</h2>
+                <div class="contact-info-details">
+                  <div><strong>Name:</strong> M.J. Helm</div>
+                  <div><strong>Facebook:</strong> <a href="https://facebook.com/MissyArtGallery" target="_blank" rel="noopener" style="color:#1877f3;text-decoration:underline;">Missy Art Gallery</a></div>
+                  <div><strong>Phone:</strong> <a href="tel:5022962507" style="color:#111;text-decoration:underline;">502-296-2507</a></div>
+                  <div><strong>Email:</strong> <a href="mailto:mjhartist65@gmail.com" style="color:#111;text-decoration:underline;">mjhartist65@gmail.com</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  <script src="home-anim.js"></script>
+      <style>
+        .contact-modal-content {
+          position: relative;
+          max-width: 95vw;
+          width: 600px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+        .contact-modal-img {
+          width: 100%;
+          max-width: 600px;
+          border-radius: 1.2rem;
+          box-shadow: 0 2px 16px #0002;
+          display: block;
+        }
+        .contact-info-box {
+          position: fixed;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          min-width: 320px;
+          max-width: 90vw;
+          background: rgba(255,255,255,0.96);
+          border-radius: 1rem;
+          box-shadow: 0 2px 16px #0003;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+          z-index: 10;
+          padding: 1.2rem 1.5rem;
+          font-size: 1.1rem;
+        }
+        .contact-info-box h2 {
+          margin: 0 0 0.5rem 0;
+          font-size: 1.1rem;
+          color: #111;
+          text-shadow: 0 1px 4px #fff;
+        }
+        .contact-info-details {
+          display: flex;
+          flex-direction: column;
+          gap: 0.3rem;
+          width: 100%;
+          align-items: flex-start;
+        }
+        @media (max-width: 900px) {
+          .contact-modal-content { width: 98vw; max-width: 98vw; }
+          .contact-modal-img { max-width: 98vw; }
+          .contact-info-box { left: 30%; top: 30%; width: 40%; height: 36%; font-size: 0.95rem; }
+        }
+        @media (max-width: 600px) {
+          .contact-modal-content { width: 100vw; max-width: 100vw; }
+          .contact-modal-img { max-width: 100vw; }
+          .contact-info-box { left: 10%; top: 60%; width: 80%; height: 30%; font-size: 0.9rem; }
+        }
+      </style>
+    <style>
+      .missy-area {
+        position: absolute;
+        left: 50vw;
+        transform: translateX(-40%);
+        bottom: 0;
+        z-index: 5;
+        height: 260px;
+        width: 180px;
+        pointer-events: none;
+      }
+      .missy-link {
+        display: block;
+        position: relative;
+        width: 180px;
+        height: 260px;
+        pointer-events: auto;
+      }
+      .missy-img {
+        width: 180px;
+        height: 260px;
+        object-fit: contain;
+        filter: grayscale(1);
+        transition: filter 0.4s;
+        z-index: 1;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        cursor: pointer;
+      }
+      .missy-img.color, .missy-link.visited .missy-img, .missy-link.fullcolor .missy-img {
+        filter: grayscale(0);
+      }
+      .missy-bubble {
+        position: absolute;
+        left: -240px;
+        bottom: 120px;
+        width: 220px;
+        height: auto;
+        z-index: 2;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .missy-bubble.show {
+        display: block !important;
+        opacity: 1;
+        pointer-events: auto;
+      }
+      @media (max-width: 900px) {
+        .missy-area, .missy-link { left: 50vw; transform: translateX(-50%); width: 90px; height: 120px; }
+        .missy-img { width: 90px; height: 120px; }
+        .missy-bubble { left: -120px; bottom: 60px; width: 120px; }
+      }
+      @media (max-width: 600px) {
+        .missy-area, .missy-link { left: 50vw; transform: translateX(-50%); width: 60px; height: 80px; }
+        .missy-img { width: 60px; height: 80px; }
+        .missy-bubble { left: -80px; bottom: 30px; width: 70px; }
+      }
+      /* Ensure nav links always show text and don't overflow */
+      .nav-link {
+        white-space: nowrap;
+        overflow: visible;
+        text-overflow: unset;
+        min-width: 0;
+        max-width: 100vw;
+        display: inline-block;
+      }
+    </style>
+  <script>
+        // Missy bubble and color logic + site full color mode
+        (function() {
+          const missyLink = document.getElementById('missyLink');
+          const missyImg = document.getElementById('missyImg');
+          const bubbleHi = document.getElementById('bubbleHi');
+          const bubbleClick = document.getElementById('bubbleClick');
+          const bubbleComeon = document.getElementById('bubbleComeon');
+          const bubblePretty = document.getElementById('bubblePretty');
+          let bubbleTimers = [];
+          // State: did user visit book page?
+          let fullColor = localStorage.getItem('missyFullColor') === '1';
+          let siteFullColor = localStorage.getItem('siteFullColor') === '1';
+          function showBubble(bubble) {
+            [bubbleHi, bubbleClick, bubbleComeon, bubblePretty].forEach(b => { b.style.display = 'none'; b.classList.remove('show'); });
+            if (bubble) { bubble.style.display = 'block'; setTimeout(() => bubble.classList.add('show'), 10); }
+          }
+          function hideBubbles() {
+            [bubbleHi, bubbleClick, bubbleComeon, bubblePretty].forEach(b => { b.style.display = 'none'; b.classList.remove('show'); });
+          }
+          function setFullColorState(on) {
+            fullColor = on;
+            if (on) {
+              missyImg.classList.add('color');
+              missyLink.classList.add('fullcolor');
+              showBubble(bubblePretty);
+              // Hide pretty bubble after 30s unless hovered
+              setTimeout(() => { if (!missyLink.matches(':hover')) hideBubbles(); }, 30000);
+            } else {
+              missyImg.classList.remove('color');
+              missyLink.classList.remove('fullcolor');
+              hideBubbles();
+            }
+          }
+          // On load, set color state
+          setFullColorState(fullColor);
+          // Apply site full color mode to backgrounds/elements (not gallery images)
+          function applySiteFullColorMode(on) {
+            const bg = document.querySelector('.home-bg');
+            const overlay = document.querySelector('.home-overlay');
+            if (on) {
+              if (bg) bg.style.filter = 'none';
+              if (overlay) overlay.style.filter = 'none';
+              document.body.classList.add('site-fullcolor');
+            } else {
+              if (bg) bg.style.filter = '';
+              if (overlay) overlay.style.filter = '';
+              document.body.classList.remove('site-fullcolor');
+            }
+          }
+          applySiteFullColorMode(siteFullColor);
+          // Hover logic
+          missyLink.addEventListener('mouseenter', () => {
+            if (fullColor) {
+              showBubble(bubblePretty);
+              return;
+            }
+            showBubble(bubbleHi);
+            bubbleTimers.push(setTimeout(() => showBubble(bubbleClick), 2000));
+            bubbleTimers.push(setTimeout(() => showBubble(bubbleComeon), 10000));
+          });
+          missyLink.addEventListener('mouseleave', () => {
+            bubbleTimers.forEach(t => clearTimeout(t));
+            bubbleTimers = [];
+            if (fullColor) {
+              setTimeout(() => { if (!missyLink.matches(':hover')) hideBubbles(); }, 30000);
+            } else {
+              hideBubbles();
+            }
+          });
+          // Click logic
+          missyLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            missyLink.classList.add('visited');
+            localStorage.setItem('missyVisited', '1');
+            // Pick a random page (excluding current page)
+            const pages = [
+              { url: 'index.html', name: 'Home' },
+              { url: 'gallery.html', name: 'Gallery' },
+              { url: 'book-page.html', name: 'Book' },
+              { url: 'aboutme/AboutMe.html', name: 'About Me' }
+            ];
+            const current = window.location.pathname.split('/').pop().toLowerCase();
+            const filtered = pages.filter(p => !current.includes(p.url.toLowerCase()));
+            const pick = filtered[Math.floor(Math.random() * filtered.length)];
+            window.location.href = pick.url;
+          });
+          // If returning from book page, show full color and pretty bubble
+          window.addEventListener('focus', () => {
+            if (localStorage.getItem('missyFullColor') === '1') setFullColorState(true);
+            if (localStorage.getItem('siteFullColor') === '1') applySiteFullColorMode(true);
+          });
+          // Optionally, clear siteFullColor if you want to reset on navigation away
+        })();
+    // Home navigation link handlers
+    document.addEventListener('DOMContentLoaded', function () {
+      const navLinks = document.querySelectorAll('.nav-link');
+      // Restore active link from localStorage
+      const savedActive = localStorage.getItem('activeNavLink');
+      if (savedActive) {
+        const savedLink = document.getElementById(savedActive);
+        if (savedLink) savedLink.classList.add('active');
+      }
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+          localStorage.setItem('activeNavLink', this.id);
+        });
+      });
+      document.getElementById('galleryLink').onclick = function(e) {
+        e.preventDefault();
+        this.classList.add('active');
+        window.location.href = 'gallery.html';
+      };
+      document.getElementById('aboutLink').onclick = function(e) {
+        e.preventDefault();
+        this.classList.add('active');
+        window.openAboutMe && window.openAboutMe();
+      };
+      // No JS needed for contact link, it scrolls to section
+    });
+  </script>
+  <!-- Modal for full image view (shared with gallery) -->
+  <div class="modal" id="imageModal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImg" alt="" />
+  </div>
+
+  <script src="gallery.js"></script>
+  <script>
+    // Contact Modal logic
+    document.addEventListener('DOMContentLoaded', function () {
+      const contactLink = document.getElementById('contactLink');
+      const contactModal = document.getElementById('contactModal');
+      const closeContactModal = document.getElementById('closeContactModal');
+      contactLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        contactModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      });
+      closeContactModal.addEventListener('click', function() {
+        contactModal.style.display = 'none';
+        document.body.style.overflow = '';
+      });
+      contactModal.addEventListener('click', function(e) {
+        if (e.target === contactModal) {
+          contactModal.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+    });
+  </script>
+  <button id="backToTop" title="Back to Top">&#8679;</button>
+</body>
+</html>
