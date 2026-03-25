@@ -4,114 +4,43 @@
 
 // About Me modal logic (available globally)
 window.openAboutMe = function() {
-  // Try both .jpg and .png, prefer .png if it exists
-  const aboutmeJpg = 'aboutme/Aboutme500.jpg';
-  const aboutmePng = 'aboutme/Aboutme500.png';
   const modal = document.getElementById('imageModal');
   const modalImg = document.getElementById('modalImg');
-  function showAboutMe(src) {
-    modal.style.display = 'flex';
-    modalImg.src = src;
-    modalImg.style.height = '90vh';
-    modalImg.style.width = 'auto';
-    modalImg.style.maxHeight = '90vh';
-    modalImg.style.maxWidth = 'unset';
-    modalImg.style.objectFit = 'contain';
-    modalImg.style.borderRadius = '1.2rem';
-    modalImg.style.background = '#fff';
-    modalImg.style.display = 'block';
-    modalImg.style.margin = '0 auto';
-    modalImg.style.boxShadow = '0 2px 16px #0002';
-    modalImg.style.position = 'relative';
-    modalImg.style.top = '0';
-    modalImg.style.left = '0';
-    modalImg.style.right = '0';
-    modalImg.style.bottom = '0';
-    modalImg.style.padding = '0';
-    modalImg.style.overflow = 'auto';
-    modalImg.parentElement.style.alignItems = 'center';
-    modalImg.parentElement.style.justifyContent = 'center';
-    modalImg.parentElement.style.overflowY = 'auto';
-    modalImg.parentElement.style.overflowX = 'auto';
-
-    // Add floating close button at bottom right if not present
-    let floatingClose = document.getElementById('floatingCloseBtn');
-    if (!floatingClose) {
-      floatingClose = document.createElement('button');
-      floatingClose.id = 'floatingCloseBtn';
-      floatingClose.innerHTML = '&times;';
-      floatingClose.style.position = 'fixed';
-      floatingClose.style.bottom = '32px';
-      floatingClose.style.right = '32px';
-      floatingClose.style.zIndex = '9999';
-      floatingClose.style.background = '#fff';
-      floatingClose.style.color = '#111';
-      floatingClose.style.fontSize = '2.2rem';
-      floatingClose.style.border = '2px solid #00e6e6';
-      floatingClose.style.borderRadius = '50%';
-      floatingClose.style.width = '48px';
-      floatingClose.style.height = '48px';
-      floatingClose.style.boxShadow = '0 2px 12px #0004';
-      floatingClose.style.cursor = 'pointer';
-      floatingClose.style.display = 'none';
-      document.body.appendChild(floatingClose);
-    }
-    function closeModal() {
-      modal.style.display = 'none';
-      modalImg.src = '';
-      // Reset styles
-      modalImg.removeAttribute('style');
-      modalImg.parentElement.style.alignItems = '';
-      modalImg.parentElement.style.justifyContent = '';
-      modalImg.parentElement.style.overflowY = '';
-      floatingClose.style.display = 'none';
-      let scrollInd = document.getElementById('scrollIndicator');
-      if (scrollInd) scrollInd.remove();
-    }
-    // Attach close handler to all .close buttons in the modal
-    document.querySelectorAll('.close').forEach(btn => {
-      btn.onclick = closeModal;
-    });
-    floatingClose.onclick = closeModal;
-    modal.onclick = function (e) {
-      if (e.target === modal) closeModal();
-    };
-    // Show floating close button when modal is open
-    floatingClose.style.display = 'block';
-
-    // Add scroll indicator if image is tall
-    setTimeout(() => {
-      let scrollInd = document.getElementById('scrollIndicator');
-      if (modalImg.scrollHeight > window.innerHeight + 40) {
-        if (!scrollInd) {
-          scrollInd = document.createElement('div');
-          scrollInd.id = 'scrollIndicator';
-          scrollInd.innerHTML = '&#8595; Scroll Down';
-          scrollInd.style.position = 'fixed';
-          scrollInd.style.left = '50%';
-          scrollInd.style.top = 'calc(100vh - 80px)';
-          scrollInd.style.transform = 'translateX(-50%)';
-          scrollInd.style.background = 'rgba(255,255,255,0.9)';
-          scrollInd.style.color = '#00e6e6';
-          scrollInd.style.fontSize = '1.3rem';
-          scrollInd.style.padding = '0.5rem 1.2rem';
-          scrollInd.style.borderRadius = '1.2rem';
-          scrollInd.style.boxShadow = '0 2px 8px #0002';
-          scrollInd.style.zIndex = '9998';
-          document.body.appendChild(scrollInd);
-        } else {
-          scrollInd.style.display = 'block';
-        }
-      } else if (scrollInd) {
-        scrollInd.style.display = 'none';
-      }
-    }, 300);
+  // Remove image and insert custom About Me overlay
+  modalImg.style.display = 'none';
+  let aboutOverlay = document.getElementById('aboutMeOverlay');
+  if (!aboutOverlay) {
+    aboutOverlay = document.createElement('div');
+    aboutOverlay.id = 'aboutMeOverlay';
+    aboutOverlay.innerHTML = `
+      <div class="aboutme-bg-blur"></div>
+      <div class="aboutme-content">
+        <img src="aboutme/Aboutme500.jpg" class="aboutme-main-img" alt="About Missy" />
+        <div class="aboutme-main-text">
+          <h2>About Missy</h2>
+          <p>Missy is a Daughter, a Mother, and a Child of God. Missy loves her family and animals. She also loves to meet new people and make new friends. Even her business is focused on people, giving her the opportunity to meet new people. She has made a difference in many lives.</p>
+          <blockquote>"I love God, friends, family & animals. I love to paint & write poetry. I especially love to be free."</blockquote>
+        </div>
+      </div>
+      <button id="aboutMeCloseBtn" class="aboutme-close-btn">&times;</button>
+    `;
+    modal.appendChild(aboutOverlay);
   }
-  // Try to load .png first, fallback to .jpg
-  const testImg = new window.Image();
-  testImg.onload = function() { showAboutMe(aboutmePng); };
-  testImg.onerror = function() { showAboutMe(aboutmeJpg); };
-  testImg.src = aboutmePng;
+  aboutOverlay.style.display = 'flex';
+  modal.style.display = 'flex';
+  // Close logic
+  document.getElementById('aboutMeCloseBtn').onclick = function() {
+    aboutOverlay.style.display = 'none';
+    modal.style.display = 'none';
+    modalImg.style.display = '';
+  };
+  modal.onclick = function(e) {
+    if (e.target === modal) {
+      aboutOverlay.style.display = 'none';
+      modal.style.display = 'none';
+      modalImg.style.display = '';
+    }
+  };
 };
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -1,99 +1,29 @@
-  <script>
-  // Random bubble logic (scoped to avoid redeclaration)
-  (function() {
-    const bubbleImgs = [
-      'Book/BubbleHi.png',
-      'Book/BubbleClick.png',
-      'Book/BubblePretty.png',
-      'Book/BubblePeaceful.png',
-      'Book/BubbleShowAround.png',
-      'Book/BubbleFeelFree.png'
-    ];
-    const bubbleMsgs = [
-      "Hi! Welcome to the gallery!",
-      "Click me for a surprise!",
-      "Pretty, isn't it? I did this just for you. I hope you like it.  MJH",
-      "It's so peaceful here.",
-      "Let me show you around!",
-      "Feel free to explore!"
-    ];
-    const idx = Math.floor(Math.random() * bubbleImgs.length);
-    const bubble = document.getElementById('missyCornerBubble');
-    bubble.style.backgroundImage = `url('${bubbleImgs[idx]}')`;
-    bubble.textContent = bubbleMsgs[idx];
-    // Missy click random page
-    document.getElementById('missyCornerImg').addEventListener('click', function(e) {
-      e.preventDefault();
-      const pages = [
-        { url: 'index.html', name: 'Home' },
-        { url: 'gallery.html', name: 'Gallery' },
-        { url: 'book-page.html', name: 'Book' },
-        { url: 'aboutme/AboutMe.html', name: 'About Me' }
-      ];
-      const current = window.location.pathname.split('/').pop().toLowerCase();
-      const filtered = pages.filter(p => !current.includes(p.url.toLowerCase()));
-      const pick = filtered[Math.floor(Math.random() * filtered.length)];
-      window.location.href = pick.url;
-    });
-  })();
-  </script>
-      // Contact link opens modal (shared with home)
-      document.getElementById('contactLink').onclick = function(e) {
-        e.preventDefault();
-        // Try to open the contact modal from home page if available
-        if (window.openContactModal) {
-          window.openContactModal();
-        } else {
-          // Fallback: show a simple modal or alert
-          alert('Contact modal not available on this page. Please visit the Home page.');
-        }
-      };
-    });
-  </script>
-</body>
-</body>
-<!-- Missy Assistant Widget -->
-<div class="missy-corner-widget" id="missyCornerWidget">
-  <img src="Book/MissyCutOut.png" alt="Missy" class="missy-corner-img" id="missyCornerImg" />
-  <div class="missy-corner-bubble" id="missyCornerBubble"></div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Missy Art Gallery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="gallery-header-clean">
+    <h1 class="site-title" id="animatedTitle">Missy Art Gallery</h1>
+    <nav class="gallery-nav-clean" style="display:flex;justify-content:center;gap:2rem;">
+      <a href="#" class="nav-link" id="aboutLink">About</a>
+      <a href="gallery.html" class="nav-link" id="galleryLink">Gallery</a>
+      <a href="#" class="nav-link" id="contactLink">Contact</a>
+    </nav>
+  </header>
 
-<script>
-  // Random bubble logic
-  const bubbleImgs = [
-    'Book/BubbleHi.png',
-    'Book/BubbleClick.png',
-    'Book/BubblePretty.png',
-    'Book/BubblePeaceful.png',
-    'Book/BubbleShowAround.png',
-    'Book/BubbleFeelFree.png'
-  ];
-  const bubbleMsgs = [
-    "Hi! Welcome to the gallery!",
-    "Click me for a surprise!",
-    "Pretty, isn't it? I did this just for you. I hope you like it. – MJH",
-    "It's so peaceful here.",
-    "Let me show you around!",
-    "Feel free to explore!"
-  ];
-  const idx = Math.floor(Math.random() * bubbleImgs.length);
-  const bubble = document.getElementById('missyCornerBubble');
-  bubble.style.backgroundImage = `url('${bubbleImgs[idx]}')`;
-  bubble.textContent = bubbleMsgs[idx];
+  <!-- Gallery grid and other content goes here -->
 
-  document.getElementById('missyCornerImg').addEventListener('click', function(e) {
-    e.preventDefault();
-    // Pick a random page (excluding current page)
-    const pages = [
-      { url: 'index.html', name: 'Home' },
-      { url: 'gallery.html', name: 'Gallery' },
-      { url: 'book-page.html', name: 'Book' },
-      { url: 'aboutme/AboutMe.html', name: 'About Me' }
-    ];
-    const current = window.location.pathname.split('/').pop().toLowerCase();
-    const filtered = pages.filter(p => !current.includes(p.url.toLowerCase()));
-    const pick = filtered[Math.floor(Math.random() * filtered.length)];
-    window.location.href = pick.url;
-  });
-</script>
+  <!-- Missy Assistant Widget -->
+  <div class="missy-corner-widget" id="missyCornerWidget">
+    <img src="Book/MissyCutOut.png" alt="Missy" class="missy-corner-img" id="missyCornerImg" />
+    <div class="missy-corner-bubble" id="missyCornerBubble"></div>
+  </div>
+
+  <script src="gallery.js"></script>
+</body>
 </html>

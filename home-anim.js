@@ -1,3 +1,35 @@
+// Track page visits and unlock color mode
+function markPageVisited(page) {
+    localStorage.setItem('visited_' + page, '1');
+}
+
+function allPagesVisited() {
+    return (
+        localStorage.getItem('visited_home') === '1' &&
+        localStorage.getItem('visited_gallery') === '1' &&
+        localStorage.getItem('visited_about') === '1'
+    );
+}
+
+function unlockColorMode() {
+    localStorage.setItem('missyFullColor', '1');
+    localStorage.setItem('siteFullColor', '1');
+}
+
+// Mark this page as visited and unlock color if all visited
+document.addEventListener('DOMContentLoaded', function () {
+    // Detect which page
+    const path = window.location.pathname.toLowerCase();
+    if (path.endsWith('index.html') || path.endsWith('/')) markPageVisited('home');
+    if (path.endsWith('gallery.html')) markPageVisited('gallery');
+    if (path.includes('aboutme')) markPageVisited('about');
+
+    // On HOME, if all pages visited and not yet unlocked, unlock color
+    if ((path.endsWith('index.html') || path.endsWith('/')) && allPagesVisited() && localStorage.getItem('siteFullColor') !== '1') {
+        unlockColorMode();
+        // Optionally, show a fun animation or message here
+    }
+});
 // home-anim.js Gallery.js 1442:0324
 // Animates the Missy Art Gallery title letters with color flashes
 

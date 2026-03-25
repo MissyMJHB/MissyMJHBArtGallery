@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Me - Missy Art Gallery</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+        /* Grayscale filter for locked mode */
+        body.grayscale .aboutme-img-container img {
+          filter: grayscale(1) brightness(0.92);
+          transition: filter 0.3s;
+        }
+        body.grayscale {
+          filter: grayscale(1) brightness(0.97);
+        }
+        body.grayscale .main-nav a:hover,
+        body.grayscale .main-nav a:focus,
+        body.grayscale .main-nav a:active {
+          filter: none !important;
+          color: #e6007a !important;
+        }
+      body { 
+        margin: 0; 
+        padding: 0; 
+        min-height: 100vh; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: flex-start; 
+        transition: filter 0.4s; 
+        /* No background here, handled globally */ 
+      }
+    .aboutme-img-container {
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      margin-top: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .aboutme-img-container img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 1.2rem;
+      box-shadow: 0 4px 32px #0003;
+      background: #fff;
+      display: block;
+      object-fit: contain;
+      margin-left: auto;
+      margin-right: auto;
+      transition: max-width 0.2s;
+    }
+    @media (max-width: 900px) {
+      .aboutme-img-container img {
+        max-width: 98vw;
+        border-radius: 0.7rem;
+      }
+    }
+    .back-to-top {
+      position: fixed;
+      right: 2vw;
+      bottom: 2vw;
+      background: #e6007a;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 2rem;
+      box-shadow: 0 2px 12px #0003;
+      cursor: pointer;
+      display: none;
+      z-index: 2000;
+      transition: background 0.2s;
+    }
+    .back-to-top:hover {
+      background: #7c3aed;
+    }
+  </style>
+</head>
+<body>
+  <nav class="main-nav">
+    <a href="../index.html">Home</a>
+    <a href="../gallery.html">Gallery</a>
+    <a href="#" id="contactLink">Contact</a>
+  </nav>
+  <div class="aboutme-img-container">
+    <img src="Aboutme500.jpg" alt="About Me" />
+  </div>
+  <script>
+
+    // Grayscale lock logic
+    function checkUnlock() {
+      const visitedHome = localStorage.getItem('visited_home') === '1';
+      const visitedGallery = localStorage.getItem('visited_gallery') === '1';
+      const visitedAbout = localStorage.getItem('visited_about') === '1';
+      if (visitedHome && visitedGallery && visitedAbout) {
+        document.body.classList.remove('grayscale');
+          document.body.classList.add('fullcolor');
+        } else {
+          document.body.classList.add('grayscale');
+          document.body.classList.remove('fullcolor');
+        }
+      }
+      // Mark About as visited
+      localStorage.setItem('visited_about', '1');
+      checkUnlock();
+      window.addEventListener('storage', checkUnlock);
+
+    // --- Missy Widget (bottom right, always visible, random bubble, clickable) ---
+    document.addEventListener('DOMContentLoaded', function() {
+      // Create Missy widget container if not present
+      let missyWidget = document.getElementById('missyCornerWidget');
+      if (!missyWidget) {
+        missyWidget = document.createElement('div');
+        missyWidget.id = 'missyCornerWidget';
+        missyWidget.className = 'missy-corner-widget';
+        document.body.appendChild(missyWidget);
+      }
+      // Add Missy image
+      let missyImg = document.getElementById('missyCornerImg');
+      if (!missyImg) {
+        missyImg = document.createElement('img');
+        missyImg.id = 'missyCornerImg';
+        missyImg.className = 'missy-corner-img';
+        missyImg.src = '../Book/MissyCutOut.png';
+        missyImg.alt = 'Missy';
+        missyImg.tabIndex = 0;
+        missyWidget.appendChild(missyImg);
+      }
+      // Add Missy bubble
+      let missyBubble = document.getElementById('missyCornerBubble');
+      if (!missyBubble) {
+        missyBubble = document.createElement('img');
+        missyBubble.id = 'missyCornerBubble';
+        missyBubble.className = 'missy-bubble bubble-hidden';
+        missyBubble.style.position = 'absolute';
+        missyBubble.style.right = '110%';
+        missyBubble.style.top = '-55px';
+        missyBubble.style.width = '110px';
+        missyBubble.style.pointerEvents = 'auto';
+        missyWidget.appendChild(missyBubble);
+      }
+      // Bubble images and texts
+      const bubbles = [
+        {src: '../Book/BubbleHi.png', text: 'Hi! Welcome!'},
+        {src: '../Book/BubbleClick.png', text: 'Click me for a surprise!'},
+        {src: '../Book/BubblePretty.png', text: "Pretty, isn't it?"},
+        {src: '../Book/BubbleShowAround.png', text: 'Let me show you around!'},
+        {src: '../Book/BubblePeaceful.png', text: "It's so peaceful here."},
+        {src: '../Book/BubbleFeelFree.png', text: 'Feel free to explore!'},
+        {src: '../Book/BubbleOops.png', text: 'Oops! Try again!'},
+        {src: '../Book/BubbleAuthor.png', text: 'An author liked my painting so much, she commissioned me for her book cover!'},
+        {src: '../Book/BubbleLike.png', text: 'Do you like this?'}
+      ];
+      function showRandomBubble() {
+        const pick = bubbles[Math.floor(Math.random() * bubbles.length)];
+        missyBubble.src = pick.src;
+        missyBubble.alt = pick.text;
+        missyBubble.classList.remove('bubble-hidden');
+        missyBubble.classList.add('show');
+        setTimeout(() => {
+          missyBubble.classList.remove('show');
+          missyBubble.classList.add('bubble-hidden');
+        }, 3200);
+      }
+      // Show bubble on hover
+      missyImg.addEventListener('mouseenter', showRandomBubble);
+      // Show bubble on focus (keyboard accessibility)
+      missyImg.addEventListener('focus', showRandomBubble);
+      // Show bubble on click
+      missyImg.addEventListener('click', function(e) {
+        e.preventDefault();
+        showRandomBubble();
+      });
+      // Make Missy clickable (pointer)
+      missyImg.style.cursor = 'pointer';
+      // Ensure widget is always in view (responsive)
+      function keepMissyInView() {
+        const widget = missyWidget;
+        if (!widget) return;
+        // Clamp right/bottom to always be visible
+        widget.style.right = `max(1vw, 12px)`;
+        widget.style.bottom = `max(1vw, 12px)`;
+      }
+      window.addEventListener('resize', keepMissyInView);
+      keepMissyInView();
+    });
+  </script>
+
+</body>
+</html>

@@ -1,3 +1,141 @@
+/* Missy nav bar styles */
+.main-nav {
+  display: flex;
+  gap: 2.2rem;
+  justify-content: center;
+  align-items: center;
+  margin: 1.2rem 0 1.8rem 0;
+  font-size: 1.25rem;
+  font-family: inherit;
+  z-index: 10;
+}
+.main-nav a {
+  color: #7c3aed;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+.main-nav a:hover {
+  color: #e6007a;
+  text-decoration: underline;
+}
+/* About Me Modal Overlay Styles */
+#aboutMeOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: none;
+}
+.aboutme-bg-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('aboutme/Aboutme500.jpg') center center/cover no-repeat;
+  filter: blur(16px) brightness(0.7);
+  z-index: 0;
+}
+.aboutme-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.85);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 32px #0006;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  max-width: 540px;
+  width: 96vw;
+  margin: 0 auto;
+}
+.aboutme-main-img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 16px #0003;
+}
+.aboutme-main-text {
+  font-size: 1.35rem;
+  color: #231942;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.aboutme-main-text h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: #e6007a;
+}
+.aboutme-main-text p {
+  margin-bottom: 1.2rem;
+  line-height: 1.5;
+}
+.aboutme-main-text blockquote {
+  font-size: 1.2rem;
+  color: #00e6e6;
+  font-style: italic;
+  margin: 1.2rem 0 0 0;
+}
+.aboutme-close-btn {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  z-index: 10;
+  background: #fff;
+  color: #e6007a;
+  font-size: 2.5rem;
+  border: 2px solid #e6007a;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  box-shadow: 0 2px 12px #0003;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.aboutme-close-btn:hover {
+  background: #e6007a;
+  color: #fff;
+}
+@media (max-width: 600px) {
+  .aboutme-content {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+    max-width: 98vw;
+    width: 98vw;
+  }
+  .aboutme-main-img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1rem;
+  }
+  .aboutme-main-text {
+    font-size: 1.05rem;
+  }
+  .aboutme-main-text h2 {
+    font-size: 1.3rem;
+  }
+  .aboutme-close-btn {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.7rem;
+  }
+}
 /* Missy corner widget image cursor pointer */
 .missy-corner-img {
   cursor: pointer;
@@ -42,7 +180,7 @@
   transition: filter 0.4s, box-shadow 0.3s;
   cursor: pointer;
   background: #fff8;
-  margin-bottom: 1vw;
+  right: 120px; /* move Missy to the right by her width */
 }
 @media (max-width: 900px) {
   .book-gallery img { width: 120px; }
@@ -61,7 +199,7 @@
   width: 600px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+    right: 80px; /* move Missy to the right by her width on mobile */
   justify-content: center;
   z-index: 1000;
   background: none;
@@ -163,20 +301,24 @@
 /* Missy Assistant Widget (fixed corner) */
 .missy-corner-widget {
   position: fixed;
-  right: 1vw;
-  bottom: 1vw;
+  right: max(1vw, 12px);
+  bottom: max(1vw, 12px);
   z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  pointer-events: none;
+  pointer-events: auto;
+  /* Prevent overflow on small screens */
+  max-width: 98vw;
+  max-height: 98vh;
 }
 .missy-corner-img {
   width: 120px;
   max-width: 30vw;
   height: auto;
   margin-bottom: 0.2rem;
-  pointer-events: none;
+  pointer-events: auto;
+  box-sizing: border-box;
 }
 .missy-corner-bubble {
   background: #fff;
@@ -208,21 +350,38 @@
   display: block;
   margin: 0 auto;
 }
+/* Missy bubble: always on her right (left side of image), raised by half its height */
+/* Bubble: always to Missy's right (our left), offset so arrow points at her */
 .missy-bubble {
+  position: absolute;
+  right: 110%; /* place bubble to the left of Missy, with a gap */
+  top: -55px;
   width: 110px;
   height: auto;
   max-width: 28vw;
   display: block;
-  margin: 0.2rem auto 0 auto;
+  margin: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+@media (max-width: 600px) {
+  .missy-bubble {
+    right: 100%;
+    top: -45px;
+    width: 90px;
+    max-width: 60vw;
+  }
 }
 @media (max-width: 600px) {
   #missyImg {
-    width: 160px;
-    max-width: 80vw;
+    width: 80px;
+    max-width: 40vw;
   }
   .missy-bubble {
-    width: 210px;
-    max-width: 90vw;
+    left: -90px; /* move to left of Missy image on mobile */
+    top: -45px;  /* raise by about half its height on mobile */
+    width: 90px;
+    max-width: 60vw;
   }
 }
 #contact-section {
@@ -405,6 +564,24 @@ body {
   margin: 0;
   font-family: 'Segoe UI', Arial, sans-serif;
   color: #111;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('gallery-background.png') center center/cover no-repeat;
+  opacity: 1;
+  pointer-events: none;
+  transition: filter 0.4s;
+  filter: grayscale(1) brightness(0.97);
+}
+body.fullcolor::before {
+  filter: none;
 }
 
 .home-bg {
@@ -932,4 +1109,31 @@ body {
   );
   opacity: 0.7;
   transition: background-position 0.5s;
+}
+
+/* Utility class to hide Missy bubbles by default */
+.bubble-hidden {
+  display: none;
+}
+
+/* Contact modal (home) override for centering */
+#contactModal {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#closeContactModal {
+  z-index: 2;
+}
+
+/* Contact links styling */
+.contact-link-fb {
+  color: #1877f3;
+  text-decoration: underline;
+}
+.contact-link-phone,
+.contact-link-email {
+  color: #111;
+  text-decoration: underline;
 }
