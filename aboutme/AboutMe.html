@@ -6,31 +6,30 @@
   <title>About Me - Missy Art Gallery</title>
   <link rel="stylesheet" href="../style.css" />
   <style>
-        /* Grayscale filter for locked mode */
-        body.grayscale .aboutme-img-container img {
-          filter: grayscale(1) brightness(0.92);
-          transition: filter 0.3s;
-        }
-        body.grayscale {
-          filter: grayscale(1) brightness(0.97);
-        }
-        body.grayscale .main-nav a:hover,
-        body.grayscale .main-nav a:focus,
-        body.grayscale .main-nav a:active {
-          filter: none !important;
-          color: #e6007a !important;
-        }
-      body { 
-        margin: 0; 
-        padding: 0; 
-        min-height: 100vh; 
-        display: flex; 
-        flex-direction: column; 
-        align-items: center; 
-        justify-content: flex-start; 
-        transition: filter 0.4s; 
-        /* No background here, handled globally */ 
-      }
+    /* Grayscale filter for locked mode */
+    body.grayscale .aboutme-img-container img {
+      filter: grayscale(1) brightness(0.92);
+      transition: filter 0.3s;
+    }
+    body.grayscale {
+      filter: grayscale(1) brightness(0.97);
+    }
+    body.grayscale .main-nav a:hover,
+    body.grayscale .main-nav a:focus,
+    body.grayscale .main-nav a:active {
+      filter: none !important;
+      color: #e6007a !important;
+    }
+    body { 
+      margin: 0; 
+      padding: 0; 
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: flex-start; 
+      transition: filter 0.4s; 
+    }
     .aboutme-img-container {
       width: 100vw;
       display: flex;
@@ -89,7 +88,6 @@
     <img src="Aboutme500.jpg" alt="About Me" />
   </div>
   <script>
-
     // Grayscale lock logic
     function checkUnlock() {
       const visitedHome = localStorage.getItem('visited_home') === '1';
@@ -97,16 +95,16 @@
       const visitedAbout = localStorage.getItem('visited_about') === '1';
       if (visitedHome && visitedGallery && visitedAbout) {
         document.body.classList.remove('grayscale');
-          document.body.classList.add('fullcolor');
-        } else {
-          document.body.classList.add('grayscale');
-          document.body.classList.remove('fullcolor');
-        }
+        document.body.classList.add('fullcolor');
+      } else {
+        document.body.classList.add('grayscale');
+        document.body.classList.remove('fullcolor');
       }
-      // Mark About as visited
-      localStorage.setItem('visited_about', '1');
-      checkUnlock();
-      window.addEventListener('storage', checkUnlock);
+    }
+    // Mark About as visited
+    localStorage.setItem('visited_about', '1');
+    checkUnlock();
+    window.addEventListener('storage', checkUnlock);
 
     // --- Missy Widget (bottom right, always visible, random bubble, clickable) ---
     document.addEventListener('DOMContentLoaded', function() {
@@ -188,6 +186,5 @@
       keepMissyInView();
     });
   </script>
-
 </body>
 </html>

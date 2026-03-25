@@ -7,7 +7,8 @@
   margin: 1.2rem 0 1.8rem 0;
   font-size: 1.25rem;
   font-family: inherit;
-  z-index: 10;
+  z-index: 2;
+  position: relative;
 }
 .main-nav a {
   color: #7c3aed;
