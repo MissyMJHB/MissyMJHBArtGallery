@@ -64,11 +64,15 @@ document.addEventListener('DOMContentLoaded', function () {
       for (let ext of extensions) {
         const imgPath = `Gallery/Gallery${imgIndex}.${ext}`;
         const img = new window.Image();
-        img.src = imgPath;
+        img.loading = 'lazy';
+        img.decoding = 'async';
         img.className = 'gallery-thumb';
         img.alt = `Artwork ${imgIndex}`;
+        img.sizes = '(max-width:900px) 90vw, 180px';
+        img.srcset = imgPath + ' 800w';
+        img.src = imgPath;
         img.onload = function () {
-          if (!document.querySelector(`[src='${imgPath}']`)) {
+          if (!document.querySelector(`[src="${imgPath}"]`)) {
             if (isVisited(imgPath)) {
               img.classList.add('visited');
             }

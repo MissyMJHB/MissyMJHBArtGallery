@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Digital Art Gallery</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="/Book/MissyCutOut.png">
 </head>
 <body>
     <div class="home-bg">
@@ -40,26 +41,9 @@
     <img class="modal-content" id="modalImg" alt="" />
   </div>
 
+  <script src="core.js"></script>
   <script src="gallery.js"></script>
-  <script>
-    // Animate each word in the title as pages are visited
-    document.addEventListener('DOMContentLoaded', function() {
-      function rainbowAnimate(element) {
-        if (!element) return;
-        const colors = ['#e6007a', '#00e6e6', '#ffb300', '#7c3aed', '#ff4ecd', '#00c853', '#ff1744'];
-        let idx = 0;
-        setInterval(() => {
-          element.style.color = colors[idx % colors.length];
-          element.style.textShadow = `0 0 8px ${colors[idx % colors.length]}55`;
-          idx++;
-        }, 180);
-      }
-      // Check which pages have been visited
-      if (localStorage.getItem('visited_about') === '1') rainbowAnimate(document.getElementById('wordMissy'));
-      if (localStorage.getItem('visited_gallery') === '1') rainbowAnimate(document.getElementById('wordArt'));
-      if (localStorage.getItem('visited_home') === '1') rainbowAnimate(document.getElementById('wordGallery'));
-    });
-  </script>
+  
   <script>
     // Contact Modal logic
     document.addEventListener('DOMContentLoaded', function () {
@@ -118,40 +102,12 @@
       missyBubble.classList.add('show');
       // Special case for Oops
       if (pick.src === 'Book/BubbleOops.png') {
-        showOopsFullScreen();
+        if(window.showOopsOverlay) window.showOopsOverlay({ src: 'Book/Oops.png', showDuration: 6000, bubbleSrc: 'Book/BubbleOops.png', redirectPages: ['index.html','gallery.html','aboutme/AboutMe.html'] });
       }
     }
     function hideBubble() {
       missyBubble.classList.add('bubble-hidden');
       missyBubble.classList.remove('show');
-    }
-    function showOopsFullScreen() {
-      const overlay = document.createElement('div');
-      overlay.style.position = 'fixed';
-      overlay.style.top = 0;
-      overlay.style.left = 0;
-      overlay.style.width = '100vw';
-      overlay.style.height = '100vh';
-      overlay.style.background = 'rgba(0,0,0,0.85)';
-      overlay.style.zIndex = 99999;
-      overlay.style.display = 'flex';
-      overlay.style.alignItems = 'center';
-      overlay.style.justifyContent = 'center';
-      overlay.style.transition = 'opacity 0.5s';
-      const img = document.createElement('img');
-      img.src = 'Book/Oops.png';
-      img.alt = 'Oops!';
-      img.style.maxWidth = '90vw';
-      img.style.maxHeight = '90vh';
-      img.style.borderRadius = '1.5rem';
-      img.style.boxShadow = '0 4px 32px #000b';
-      overlay.appendChild(img);
-      document.body.appendChild(overlay);
-      setTimeout(() => {
-        overlay.style.opacity = 0;
-        setTimeout(() => document.body.removeChild(overlay), 500);
-        missyRedirect();
-      }, 6000);
     }
     function missyRedirect() {
       const pages = [
@@ -218,5 +174,6 @@
     }
   });
 </script>
+  <button id="backToTop" title="Back to top">▲</button>
 </body>
 </html>

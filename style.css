@@ -299,51 +299,69 @@
 }
 /* Contact the Artist section styles 1442:0324 */  */
 
-/* Missy Assistant Widget (fixed corner) */
+/* Missy Assistant Widget (fixed corner): force bottom-right placement and bubble on Missy's left */
 .missy-corner-widget {
-  position: fixed;
-  right: max(1vw, 12px);
-  bottom: max(1vw, 12px);
-  z-index: 9999;
+  position: fixed !important;
+  right: max(1vw, 12px) !important;
+  bottom: max(1vw, 12px) !important;
+  z-index: 99999 !important;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   pointer-events: auto;
-  /* Prevent overflow on small screens */
   max-width: 98vw;
   max-height: 98vh;
 }
-.missy-corner-img {
+/* Missy image - default grayscale, becomes color when .color class applied */
+.missy-corner-img, #missyImg, .missy-img {
   width: 120px;
   max-width: 30vw;
   height: auto;
   margin-bottom: 0.2rem;
   pointer-events: auto;
   box-sizing: border-box;
+  filter: grayscale(1) brightness(0.98);
+  transition: filter 0.25s ease, transform 0.18s ease;
 }
-.missy-corner-bubble {
-  background: #fff;
-  color: #111;
-  border: 2px solid #111;
-  border-radius: 1.2rem 1.2rem 1.2rem 0.4rem;
-  padding: 0.7rem 1.2rem;
-  font-size: 1.1rem;
-  max-width: 260px;
-  margin-bottom: 0.5rem;
-  box-shadow: 0 2px 12px #0002;
-  pointer-events: auto;
+.missy-corner-img.color, #missyImg.color, .missy-img.color { filter: none; transform: translateY(-2px); }
+
+/* Bubble visibility helpers: hidden by default, shown when JS removes .bubble-hidden / adds .show */
+.bubble-hidden { opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity 0.25s ease, transform 0.25s ease; pointer-events: none; }
+.missy-bubble.show, .missy-corner-bubble.show, #missyCornerBubble.show, #missyBubble.show { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
+
+/* Bubble positioned to Missy's left (so it appears to the page center side) */
+.missy-bubble, .missy-corner-bubble, #missyCornerBubble, #missyBubble {
+  position: absolute;
+  right: 110%; /* place bubble to the left of Missy */
+  top: -55px;
+  width: 110px;
+  height: auto;
+  max-width: 28vw;
+  display: block;
+  margin: 0;
+  pointer-events: none; /* ignore pointer events until visible */
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 @media (max-width: 600px) {
-  .missy-corner-img {
+  .missy-corner-img, #missyImg, .missy-img {
     width: 80px;
     max-width: 40vw;
   }
-  .missy-corner-bubble {
-    font-size: 0.95rem;
-    max-width: 70vw;
-    padding: 0.5rem 0.7rem;
+  .missy-bubble, .missy-corner-bubble, #missyCornerBubble, #missyBubble {
+    right: 100%;
+    top: -45px;
+    width: 90px;
+    max-width: 60vw;
   }
 }
+/* On very narrow screens, position bubble to the left (negative left) to avoid clipping */
+@media (max-width: 420px) {
+  .missy-bubble, .missy-corner-bubble, #missyCornerBubble, #missyBubble { left: -90px; right: auto; }
+}
+
 #missyImg {
   width: 120px;
   height: auto;
@@ -568,7 +586,7 @@ body {
   position: relative;
 }
 
-body::before {
+body.page-bg::before {
   content: '';
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -581,7 +599,7 @@ body::before {
   transition: filter 0.4s;
   filter: grayscale(1) brightness(0.97);
 }
-body.fullcolor::before {
+body.fullcolor.page-bg::before {
   filter: none;
 }
 
@@ -750,6 +768,16 @@ body.fullcolor::before {
 }
 
 /* Gallery page background */
+
+/* Progress dots shown under the title to indicate visited pages */
+.progress-dots{ display:inline-flex; gap:8px; margin-top:0.6rem; margin-bottom:0.6rem; }
+.progress-dots .dot{ display:inline-block; width:12px; height:12px; border-radius:50%; background:#ddd; box-shadow:0 1px 3px #0002; }
+.progress-dots .dot.on{ background: #00e6e6; box-shadow:0 0 8px #00e6e6aa; }
+
+/* Ensure gallery images remain grayscale unless hovered or visited */
+.book-gallery img{ filter: grayscale(1); transition: filter 0.35s, box-shadow 0.25s; }
+.book-gallery img:hover, .book-gallery img.visited, .book-gallery img.color{ filter: none; }
+
 
 
 
