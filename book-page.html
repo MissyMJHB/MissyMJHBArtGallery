@@ -1,0 +1,201 @@
+<!-- 1442:0324 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Gallery</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: #b3d6f7;
+      background-image: url('Book/BookBack.png');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      position: relative;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .book-gallery {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-end;
+      gap: 2vw;
+      position: absolute;
+      left: 3vw;
+      bottom: 4vw;
+      z-index: 2;
+    }
+    .book-gallery img {
+      width: 220px;
+      height: auto;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px #0006;
+      filter: grayscale(1);
+      transition: filter 0.4s, box-shadow 0.3s;
+      cursor: pointer;
+      background: #fff8;
+    }
+    .book-gallery img:hover,
+    .book-gallery img.visited {
+      filter: grayscale(0);
+      box-shadow: 0 4px 24px #00e6e688;
+    }
+    .back-link {
+      position: absolute;
+      top: 2vw;
+      left: 2vw;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #00e6e6;
+      background: rgba(255,255,255,0.85);
+      border-radius: 0.5rem;
+      padding: 0.7rem 2rem;
+      text-decoration: none;
+      box-shadow: 0 2px 8px #0002;
+      transition: background 0.2s, color 0.2s;
+      z-index: 10;
+      display: inline-block;
+    }
+    .back-link:hover {
+      background: #00e6e6;
+      color: #fff;
+    }
+    @media (max-width: 900px) {
+      .book-gallery img { width: 140px; }
+      .book-gallery { gap: 1vw; }
+    }
+    @media (max-width: 600px) {
+      .book-gallery img { width: 90px; }
+      .book-gallery { gap: 0.5vw; left: 1vw; bottom: 2vw; }
+      .back-link { font-size: 1.1rem; padding: 0.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">Home</a>
+  <a href="#" class="back-link" id="homeBackLink">Home</a>
+  <div class="book-gallery">
+    <img src="Book/Book1.jpg" alt="Book 1" />
+    <img src="Book/Book2.jpg" alt="Book 2" />
+    <img src="Book/Book3.jpg" alt="Book 3" />
+  </div>
+  <!-- Modal for full image view (copied from gallery.html) -->
+  <div class="modal" id="imageModal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImg" alt="Zoomed artwork" />
+  </div>
+  <script src="gallery.js"></script>
+  <script>
+    // Mark images as visited and open modal when clicked
+    document.querySelectorAll('.book-gallery img').forEach(img => {
+      img.addEventListener('click', () => {
+        img.classList.add('visited');
+        if (typeof openModal === 'function') {
+          openModal(img.src, img);
+        }
+      });
+    });
+    // Random bubble logic (scoped to avoid redeclaration)
+    (function() {
+      const bubbleImgs = [
+        'Book/BubbleHi.png',
+        'Book/BubbleClick.png',
+        'Book/BubblePretty.png',
+        'Book/BubblePeaceful.png',
+        'Book/BubbleShowAround.png',
+        'Book/BubbleFeelFree.png'
+      ];
+      const bubbleMsgs = [
+        "Hi! Welcome to the gallery!",
+        "Click me for a surprise!",
+        "Pretty, isn't it? I did this just for you. I hope you like it.  MJH",
+        "It's so peaceful here.",
+        "Let me show you around!",
+        "Feel free to explore!"
+      ];
+      const idx = Math.floor(Math.random() * bubbleImgs.length);
+      const bubble = document.getElementById('missyCornerBubble');
+      if (bubble) {
+        bubble.style.backgroundImage = `url('${bubbleImgs[idx]}')`;
+        bubble.textContent = bubbleMsgs[idx];
+      }
+      // Missy click random page
+      const missyImg = document.getElementById('missyCornerImg');
+      if (missyImg) {
+        missyImg.addEventListener('click', function(e) {
+          e.preventDefault();
+          const pages = [
+            { url: 'index.html', name: 'Home' },
+            { url: 'gallery.html', name: 'Gallery' },
+            { url: 'book-page.html', name: 'Book' },
+            { url: 'aboutme/AboutMe.html', name: 'About Me' }
+          ];
+          const current = window.location.pathname.split('/').pop().toLowerCase();
+          const filtered = pages.filter(p => !current.includes(p.url.toLowerCase()));
+          const pick = filtered[Math.floor(Math.random() * filtered.length)];
+          window.location.href = pick.url;
+        });
+      }
+    })();
+  </script>
+    // Home link: set Missy to full color on return
+    document.getElementById('homeBackLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      // Set global full color mode for all backgrounds/elements (except gallery images)
+      localStorage.setItem('missyFullColor', '1');
+      localStorage.setItem('siteFullColor', '1');
+      localStorage.setItem('skipColorWave', '1');
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</body>
+<!-- Missy Assistant Widget -->
+<div class="missy-corner-widget" id="missyCornerWidget">
+  <img src="Book/MissyCutOut.png" alt="Missy" class="missy-corner-img" id="missyCornerImg" />
+  <div class="missy-corner-bubble" id="missyCornerBubble"></div>
+</div>
+<script>
+  // Random bubble logic
+  const bubbleImgs = [
+    'Book/BubbleHi.png',
+    'Book/BubbleClick.png',
+    'Book/BubblePretty.png',
+    'Book/BubblePeaceful.png',
+    'Book/BubbleShowAround.png',
+    'Book/BubbleFeelFree.png'
+  ];
+  const bubbleMsgs = [
+    "Hi! Welcome to the gallery!",
+    "Click me for a surprise!",
+    "An author liked one of my paintings so much, she commissioned me to make her book cover! Pretty cool, right?",
+    "It's so peaceful here.",
+    "Let me show you around!",
+    "Feel free to explore!"
+  ];
+  const idx = Math.floor(Math.random() * bubbleImgs.length);
+  const bubble = document.getElementById('missyCornerBubble');
+  bubble.style.backgroundImage = `url('${bubbleImgs[idx]}')`;
+  bubble.textContent = bubbleMsgs[idx];
+
+  document.getElementById('missyCornerImg').addEventListener('click', function(e) {
+    e.preventDefault();
+    // Pick a random page (excluding current page)
+    const pages = [
+      { url: 'index.html', name: 'Home' },
+      { url: 'gallery.html', name: 'Gallery' },
+      { url: 'book-page.html', name: 'Book' },
+      { url: 'aboutme/AboutMe.html', name: 'About Me' }
+    ];
+    const current = window.location.pathname.split('/').pop().toLowerCase();
+    const filtered = pages.filter(p => !current.includes(p.url.toLowerCase()));
+    const pick = filtered[Math.floor(Math.random() * filtered.length)];
+    window.location.href = pick.url;
+  });
+</script>
+</html>
