@@ -70,24 +70,40 @@ document.addEventListener('DOMContentLoaded', function () {
         img.alt = `Artwork ${imgIndex}`;
         img.sizes = '(max-width:900px) 90vw, 180px';
         img.srcset = imgPath + ' 800w';
-        img.src = imgPath;
+        // assign handlers before setting src to avoid missing load events when cached
         img.onload = function () {
-          if (!document.querySelector(`[src="${imgPath}"]`)) {
-            if (isVisited(imgPath)) {
-              img.classList.add('visited');
+          try{
+            if (!document.querySelector(`[src="${imgPath}"]`)) {
+              if (isVisited(imgPath)) {
+                img.classList.add('visited');
+              }
+              galleryGrid.appendChild(img);
+              console.debug('Gallery: loaded', imgPath);
             }
-            galleryGrid.appendChild(img);
-          }
+          }catch(e){ console.warn('gallery img onload handler error', e); }
         };
-        img.onerror = function () {};
+        img.onerror = function (e) { console.debug('Gallery: failed to load', imgPath, e); };
         img.addEventListener('click', function () {
           openModal(imgPath, img);
         });
+        img.src = imgPath;
       }
       imgIndex++;
       setTimeout(tryLoadNext, 30);
     }
     tryLoadNext();
+
+    // If no images are found after a short load period, show a helpful placeholder message
+    setTimeout(function(){
+      try{
+        if(galleryGrid && galleryGrid.children.length === 0){
+          const p = document.createElement('p');
+          p.textContent = 'No gallery images were found. Place images in /Gallery named Gallery1.jpg or Gallery1.png, Gallery2.jpg/png, etc.';
+          p.style.color = '#444'; p.style.padding = '2rem'; p.style.textAlign = 'center'; p.style.fontSize = '1.05rem';
+          galleryGrid.appendChild(p);
+        }
+      }catch(e){}
+    }, 1500);
   }
 
   // --- Modal Popup ---
