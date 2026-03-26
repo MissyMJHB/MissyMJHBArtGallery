@@ -299,16 +299,27 @@
 }
 /* Contact the Artist section styles 1442:0324 */  */
 
-/* Missy Assistant Widget (fixed corner): force bottom-right placement and bubble on Missy's left */
-.missy-corner-widget {
+/* Missy fixed root — a viewport-anchored container that holds Missy so it's never pushed by page content */
+#missy-fixed-root {
   position: fixed !important;
-  right: max(1vw, 12px) !important;
-  bottom: max(1vw, 12px) !important;
-  z-index: 99999 !important;
+  right: 12px !important;
+  bottom: 12px !important;
+  z-index: 10000 !important;
+  pointer-events: none; /* let children opt-in */
+  overflow: visible !important;
+}
+
+/* Missy Assistant Widget (inside fixed root) */
+.missy-corner-widget {
+  position: relative !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 10000 !important; /* keep above overlays when shown */
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   pointer-events: auto;
+  overflow: visible;
   max-width: 98vw;
   max-height: 98vh;
 }
@@ -322,25 +333,39 @@
   box-sizing: border-box;
   filter: grayscale(1) brightness(0.98);
   transition: filter 0.25s ease, transform 0.18s ease;
+  /* Ensure Missy image stays visually above bubbles (override other rules) */
+  z-index: 11000 !important;
+  position: fixed !important; /* force fixed so z-index is relative to viewport */
+  right: 12px !important;
+  bottom: 12px !important;
 }
 .missy-corner-img.color, #missyImg.color, .missy-img.color { filter: none; transform: translateY(-2px); }
+/* Ensure Missy stays visible above content while scrolling */
+.missy-corner-widget { position: fixed !important; right: 12px !important; bottom: 12px !important; }
+
+/* Force bubble below Missy using !important so inline styles can't cover it */
+.missy-bubble, .missy-corner-bubble, #missyCornerBubble, #missyBubble {
+  position: fixed !important;
+  z-index: 10000 !important;
+}
 
 /* Bubble visibility helpers: hidden by default, shown when JS removes .bubble-hidden / adds .show */
-.bubble-hidden { opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity 0.25s ease, transform 0.25s ease; pointer-events: none; }
-.missy-bubble.show, .missy-corner-bubble.show, #missyCornerBubble.show, #missyBubble.show { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
+.bubble-hidden { opacity: 0; visibility: hidden; transform: translateY(-70%); transition: opacity 0.25s ease, transform 0.25s ease; pointer-events: none; }
+.missy-bubble.show, .missy-corner-bubble.show, #missyCornerBubble.show, #missyBubble.show { opacity: 1; visibility: visible; transform: translateY(-50%); pointer-events: auto; }
 
 /* Bubble positioned to Missy's left (so it appears to the page center side) */
 .missy-bubble, .missy-corner-bubble, #missyCornerBubble, #missyBubble {
   position: absolute;
-  right: 110%; /* place bubble to the left of Missy */
-  top: -55px;
+  right: calc(100% + 12px); /* place bubble to the left of Missy with a small gap */
+  top: -40px; /* default place slightly above Missy's top */
+  transform: none; /* position controlled by JS for fine-tuning */
   width: 110px;
   height: auto;
   max-width: 28vw;
   display: block;
   margin: 0;
   pointer-events: none; /* ignore pointer events until visible */
-  z-index: 1000;
+  z-index: 10000; /* place below Missy image (Missy image uses 10005) */
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.25s ease, transform 0.25s ease;
@@ -362,6 +387,13 @@
   .missy-bubble, .missy-corner-bubble, #missyCornerBubble, #missyBubble { left: -90px; right: auto; }
 }
 
+/* Force JS-controlled bubble positioning when Missy is inside fixed root or corner widget */
+#missy-fixed-root .missy-bubble, #missy-fixed-root .missy-corner-bubble, .missy-corner-widget .missy-bubble {
+  right: auto !important; /* allow JS to set left/top precisely */
+  transform: none !important;
+  z-index: 10000 !important;
+}
+
 #missyImg {
   width: 120px;
   height: auto;
@@ -381,7 +413,7 @@
   display: block;
   margin: 0;
   pointer-events: none;
-  z-index: 2;
+  z-index: 10000; /* ensure bubble is below Missy image */
 }
 @media (max-width: 600px) {
   .missy-bubble {
@@ -503,6 +535,36 @@
   color: #fff;
 }
 
+/* Force Missy bubble and image stacking/positioning to be consistent across pages and overrides */
+/* Put these strong rules at the end to override conflicting declarations earlier in the file */
+.missy-bubble, .missy-corner-bubble, #missyCornerBubble, #missyBubble {
+  position: fixed !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  z-index: 10000 !important; /* bubble below Missy */
+  pointer-events: none !important;
+}
+
+.missy-corner-img, #missyImg, .missy-img {
+  position: fixed !important;
+  right: 12px !important;
+  bottom: 12px !important;
+  z-index: 11000 !important; /* Missy above bubble */
+  pointer-events: auto !important;
+}
+
+#missy-fixed-root { z-index: 11100 !important; }
+
+/* Ensure JS-controlled bubble positioning inside missy-fixed-root uses left/top coordinates */
+#missy-fixed-root .missy-bubble, #missy-fixed-root .missy-corner-bubble, .missy-corner-widget .missy-bubble {
+  right: auto !important;
+  left: auto !important;
+  transform: none !important;
+}
+
 /* Scroll indicator for About Me modal */
 #scrollIndicator {
   position: fixed;
@@ -593,7 +655,10 @@ body.page-bg::before {
   z-index: 0;
   width: 100vw;
   height: 100vh;
-  background: url('gallery-background.png') center center/cover no-repeat;
+  background-image: url('/Gallery/gallery-background.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%; /* stretch/fill per user preference */
   opacity: 1;
   pointer-events: none;
   transition: filter 0.4s;
@@ -661,6 +726,8 @@ body.fullcolor.page-bg::before {
   }
 }
 .site-title {
+  position: relative;
+  z-index: 11; /* ensure title sits above nav links */
   font-size: 3rem;
   font-weight: bold;
   letter-spacing: 0.1em;
@@ -670,6 +737,11 @@ body.fullcolor.page-bg::before {
   -webkit-user-select: none;
   user-select: none;
   word-break: break-word;
+}
+
+.main-nav {
+  position: relative;
+  z-index: 10; /* keep nav under the title */
 }
 
 .site-title span {
@@ -771,6 +843,8 @@ body.fullcolor.page-bg::before {
 
 /* Progress dots shown under the title to indicate visited pages */
 .progress-dots{ display:inline-flex; gap:8px; margin-top:0.6rem; margin-bottom:0.6rem; }
+/* Hide the three small progress dots site-wide (user requested) */
+#progressDots { display: none !important; }
 .progress-dots .dot{ display:inline-block; width:12px; height:12px; border-radius:50%; background:#ddd; box-shadow:0 1px 3px #0002; }
 .progress-dots .dot.on{ background: #00e6e6; box-shadow:0 0 8px #00e6e6aa; }
 
