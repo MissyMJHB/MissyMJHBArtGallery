@@ -92,6 +92,11 @@
     markPageVisited();
     attachNavHandlers();
 
+    // compute base path for core assets (used for Missy image and bubble assets)
+    var _coreScript = document.querySelector('script[src$="core.js"]') || document.currentScript;
+    var _coreBase = '/';
+    try { if(_coreScript && _coreScript.src){ _coreBase = _coreScript.src.replace(/core\.js(?:\?.*)?$/,''); if(_coreBase && _coreBase.slice(-1) !== '/') _coreBase += '/'; } }catch(e){}
+
     // Remove duplicate Missy widgets created by per-page scripts; keep first canonical widget
     function dedupeMissyWidgets(){
       try{
@@ -153,9 +158,13 @@
         // keeper
         const keeper = document.createElement('div'); keeper.id = 'missyCornerWidget'; keeper.className = 'missy-corner-widget'; keeper.style.position = 'relative'; keeper.style.pointerEvents = 'auto'; keeper.style.display = 'flex'; keeper.style.flexDirection = 'column'; keeper.style.alignItems = 'flex-end';
         // image
-        const img = document.createElement('img'); img.id = 'missyCornerImg'; img.className = 'missy-corner-img'; img.src = '/Book/MissyCutOut.png'; img.alt = 'Missy'; img.style.width = '120px'; img.style.pointerEvents = 'auto'; img.tabIndex = 0;
+        const img = document.createElement('img'); img.id = 'missyCornerImg'; img.className = 'missy-corner-img';
+        // image src will use _coreBase computed in outer scope
+        img.src = _coreBase + 'Book/MissyCutOut.png';
+        img.alt = 'Missy'; img.style.width = '120px'; img.style.pointerEvents = 'auto'; img.tabIndex = 0;
         // bubble
-        const bubble = document.createElement('img'); bubble.id = 'missyCornerBubble'; bubble.className = 'missy-corner-bubble missy-bubble bubble-hidden'; bubble.src = '/Book/BubbleHi.png'; bubble.style.position = 'absolute'; bubble.style.right = '110%'; bubble.style.top = '-55px'; bubble.style.pointerEvents = 'none';
+        const bubble = document.createElement('img'); bubble.id = 'missyCornerBubble'; bubble.className = 'missy-corner-bubble missy-bubble bubble-hidden';
+        bubble.src = _coreBase + 'Book/BubbleHi.png'; bubble.style.position = 'absolute'; bubble.style.right = '110%'; bubble.style.top = '-55px'; bubble.style.pointerEvents = 'none';
         keeper.appendChild(img); keeper.appendChild(bubble); missyRoot.appendChild(keeper);
         // attach simple interactions (hover, leave, click)
         img.addEventListener('mouseenter', function(){ try{ img.classList.add('color'); img.style.filter='none'; if(window.showMissyBubble) window.showMissyBubble(img,bubble,{margin:8}); else if(window.positionMissyBubble) window.positionMissyBubble(img,bubble); }catch(e){} });
@@ -170,15 +179,15 @@
       try{
         opts = opts || {};
         const choices = [
-          {src: '/Book/BubbleHi.png', alt: 'Hi!'},
-          {src: '/Book/BubbleClick.png', alt: 'Click me!'},
-          {src: '/Book/BubblePretty.png', alt: 'Pretty, isn\'t it?'},
-          {src: '/Book/BubbleShowAround.png', alt: 'Let me show you around!'},
-          {src: '/Book/BubblePeaceful.png', alt: "It's so peaceful here."},
-          {src: '/Book/BubbleFeelFree.png', alt: 'Feel free to explore!'},
-          {src: '/Book/BubbleOops.png', alt: 'Oops! Try again!'},
-          {src: '/Book/BubbleAuthor.png', alt: 'Author loved my painting'},
-          {src: '/Book/BubbleLike.png', alt: 'Do you like this?'}
+          {src: _coreBase + 'Book/BubbleHi.png', alt: 'Hi!'},
+          {src: _coreBase + 'Book/BubbleClick.png', alt: 'Click me!'},
+          {src: _coreBase + 'Book/BubblePretty.png', alt: 'Pretty, isn\'t it?'},
+          {src: _coreBase + 'Book/BubbleShowAround.png', alt: 'Let me show you around!'},
+          {src: _coreBase + 'Book/BubblePeaceful.png', alt: "It's so peaceful here."},
+          {src: _coreBase + 'Book/BubbleFeelFree.png', alt: 'Feel free to explore!'},
+          {src: _coreBase + 'Book/BubbleOops.png', alt: 'Oops! Try again!'},
+          {src: _coreBase + 'Book/BubbleAuthor.png', alt: 'Author loved my painting'},
+          {src: _coreBase + 'Book/BubbleLike.png', alt: 'Do you like this?'}
         ];
         // pick random
         const pick = choices[Math.floor(Math.random() * choices.length)];
@@ -689,7 +698,7 @@
           const bubble = document.querySelector('.missy-bubble, .missy-corner-bubble, #missyCornerBubble, #missyBubble');
           if(bubble){
             // pick hi bubble if empty
-            try{ if(bubble.tagName === 'IMG' && (!bubble.src || bubble.src.indexOf('data:')===0)) bubble.src = '/Book/BubbleHi.png'; }catch(e){}
+            try{ if(bubble.tagName === 'IMG' && (!bubble.src || bubble.src.indexOf('data:')===0)) bubble.src = _coreBase + 'Book/BubbleHi.png'; }catch(e){}
             try{
               if(window.showMissyBubble){
                 // preferred: central helper that positions and shows with safe hide timing
@@ -857,7 +866,7 @@
   // Show a fullscreen Oops overlay and coordinate Missy + bubble above it, then redirect
   function showOopsOverlay(opts){
     opts = opts || {};
-    const src = opts.src || 'Book/OopsImage.png';
+    const src = opts.src || (_coreBase + 'Book/OopsImage.png');
     const showDuration = typeof opts.showDuration === 'number' ? opts.showDuration : 6000; // total time before redirect
     const revealMissyAfter = typeof opts.revealMissyAfter === 'number' ? opts.revealMissyAfter : 700; // ms
     const fadeOutBefore = typeof opts.fadeOutBefore === 'number' ? opts.fadeOutBefore : 1200; // ms before redirect to start fade

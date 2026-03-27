@@ -21,6 +21,21 @@
   color: #e6007a;
   text-decoration: underline;
 }
+/* Site header: center title and place links beneath (consistent across pages) */
+.site-header, header#siteHeader, .gallery-header-clean { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.35rem; padding:1rem 1rem; text-align:center; }
+/* Ensure header and main content render above the decorative background pseudo-element */
+header#siteHeader, .site-header, main, .overlay, .about-scroll, #contact-section { position: relative; z-index: 10; }
+.site-header .site-title, header#siteHeader .site-title, .gallery-header-clean .site-title { margin:0; font-size:2rem; line-height:1; font-weight:700; color:inherit; }
+.site-header .main-nav, header#siteHeader .main-nav, .gallery-header-clean .main-nav { margin-top:0.45rem; gap:1.2rem; }
+.gallery-nav-clean, header#siteHeader .gallery-nav-clean { display:flex; justify-content:center; gap:1.2rem; margin-top:0.4rem; }
+@media (max-width: 900px) {
+  .site-header .site-title, header#siteHeader .site-title, .gallery-header-clean .site-title { font-size:1.6rem; }
+}
+@media (max-width: 600px) {
+  .site-header .site-title, header#siteHeader .site-title, .gallery-header-clean .site-title { font-size:1.35rem; }
+  .site-header, header#siteHeader, .gallery-header-clean { padding:0.6rem 0.8rem; }
+  .main-nav, .gallery-nav-clean { gap: 0.9rem; font-size:1rem; }
+}
 /* About Me Modal Overlay Styles */
 #aboutMeOverlay {
   position: fixed;
@@ -190,6 +205,12 @@
   .book-gallery img { width: 90px; }
   .book-gallery { gap: 1vw; }
 }
+/* Gallery item captions (optional). Caption files may be placed at Gallery/captions/Gallery1.txt etc. */
+.gallery-item{ display:inline-block; width:180px; text-align:center; }
+.gallery-item img.gallery-thumb{ width:100%; height:auto; filter:grayscale(1); transition:filter 0.35s, transform 0.25s; border-radius:0.85rem; box-shadow:0 2px 12px rgba(0,0,0,0.12); }
+.gallery-item img.gallery-thumb:hover{ filter:none; transform:translateY(-4px); }
+.gallery-caption{ font-size:0.85rem; color:#231942; margin-top:0.45rem; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
+
 /* Contact Modal and About Me Modal improvements */
 .contact-modal-content {
   position: fixed;

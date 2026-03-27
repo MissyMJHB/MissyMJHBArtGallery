@@ -74,18 +74,37 @@ document.addEventListener('DOMContentLoaded', function () {
         img.onload = function () {
           try{
             if (!document.querySelector(`[src="${imgPath}"]`)) {
+              // create a wrapper so we can optionally show captions later
+              const item = document.createElement('figure');
+              item.className = 'gallery-item';
               if (isVisited(imgPath)) {
                 img.classList.add('visited');
               }
-              galleryGrid.appendChild(img);
+              item.appendChild(img);
+              // attempt to load a caption file at Gallery/captions/Gallery{n}.txt (optional)
+              (async function(){
+                try{
+                  const capPath = `Gallery/captions/Gallery${imgIndex}.txt`;
+                  const resp = await fetch(capPath);
+                  if(resp && resp.ok){
+                    const txt = (await resp.text()).trim();
+                    if(txt){
+                      const figcap = document.createElement('figcaption');
+                      figcap.className = 'gallery-caption';
+                      figcap.textContent = txt;
+                      item.appendChild(figcap);
+                    }
+                  }
+                }catch(e){}
+              })();
+              galleryGrid.appendChild(item);
+              // attach click handler on the thumbnail to open modal (use the image src)
+              img.addEventListener('click', function () { openModal(imgPath, img); });
               console.debug('Gallery: loaded', imgPath);
             }
           }catch(e){ console.warn('gallery img onload handler error', e); }
         };
         img.onerror = function (e) { console.debug('Gallery: failed to load', imgPath, e); };
-        img.addEventListener('click', function () {
-          openModal(imgPath, img);
-        });
         img.src = imgPath;
       }
       imgIndex++;

@@ -1,30 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Contact - Missy Art Gallery</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact Missy - Missy Art Gallery</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  html,body{height:100%;margin:0;}
+  body{background-image:url('aboutme/ContactMe.png');background-size:cover;background-position:center;background-repeat:no-repeat;height:100vh;overflow:hidden;display:flex;flex-direction:column;color:#fff;}
+  .topbar{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;background:linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.0));position:relative;z-index:2;}
+  .site-title{font-weight:700}
+  .nav{display:flex;gap:1rem;}
+  .overlay{margin:auto;background:rgba(0,0,0,0.55);padding:2rem;border-radius:12px;max-width:520px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,0.6);} 
+  a.button{display:inline-block;margin-top:0.5rem;padding:0.5rem 1rem;background:#e6007a;color:#fff;border-radius:8px;text-decoration:none;}
+  @media(max-width:600px){ .overlay{margin:1rem; width:calc(100% - 2rem);} .topbar{padding:.6rem 1rem}}
+</style>
 </head>
-<body class="page-bg">
-  <header class="gallery-header-clean">
-    <h1 class="site-title">Contact the Artist</h1>
-    <nav class="gallery-nav-clean" style="display:flex;justify-content:center;gap:2rem;">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="gallery.html" class="nav-link">Gallery</a>
-      <a href="aboutme/AboutMe.html" class="nav-link">About</a>
-    </nav>
-  </header>
+<body>
+<header id="siteHeader" class="site-header" role="banner">
+  <h1 class="site-title">Missy Art Gallery</h1>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="aboutme/AboutMe.html">About</a>
+  </nav>
+</header>
 
-  <main style="max-width:900px;margin:3rem auto;padding:1rem;">
-    <section>
-      <h2>Get in touch</h2>
-      <p>Email: <a href="mailto:your@email.com">your@email.com</a></p>
-      <p>Instagram: <a href="https://instagram.com/yourprofile" target="_blank" rel="noopener">@yourprofile</a></p>
-      <p>If you'd like a contact form here, say the word and it will be added.</p>
-    </section>
-  </main>
+<main role="main" aria-labelledby="contactHeading" style="flex:1;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+  <section class="overlay" aria-labelledby="contactHeading" style="pointer-events:auto;">
+    <h1 id="contactHeading">Contact Missy</h1>
+    <p><strong>Name:</strong> M.J. Helm</p>
+    <p><strong>Facebook:</strong> <a href="https://www.facebook.com/MJHB65/" target="_blank" rel="noopener" class="button">Missy Art Gallery</a></p>
+    <p><strong>Email:</strong> <a href="mailto:MJHArtist65@Gmail.com" class="button">MJHArtist65@Gmail.com</a></p>
+    <p><strong>Phone:</strong> <a href="tel:+15022962507" class="button">(502) 296-2507</a></p>
+    <p style="margin-top:1rem;font-size:.95rem;opacity:.95">Click the email or phone button to reach Missy directly. Thank you for visiting!</p>
+  </section>
+</main>
 
-  <script src="core.js"></script>
+<script src="core.js"></script>
 </body>
 </html>

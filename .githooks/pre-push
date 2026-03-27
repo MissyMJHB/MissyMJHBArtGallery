@@ -1,0 +1,14 @@
+#!/bin/sh
+# Prevent direct pushes to main/master on the client. Use PRs instead.
+# To bypass locally (not recommended) set ALLOW_PUSH_MAIN=1 in your environment.
+
+branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+if [ "$branch" = "main" ] || [ "$branch" = "master" ]; then
+  if [ "${ALLOW_PUSH_MAIN}" = "1" ]; then
+    exit 0
+  fi
+  echo "ERROR: Direct pushes to '$branch' are blocked by local hook. Create a branch and open a PR instead." 1>&2
+  echo "To override locally set ALLOW_PUSH_MAIN=1 (not recommended)." 1>&2
+  exit 1
+fi
+exit 0
