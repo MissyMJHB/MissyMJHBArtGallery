@@ -679,7 +679,7 @@ body.page-bg::before {
   z-index: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url('/Gallery/gallery-background.png');
+  background-image: url('/gallery-background.png');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 100% 100%; /* stretch/fill per user preference */
@@ -705,7 +705,7 @@ body.fullcolor.page-bg::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: url('homeback16x9.jpg') center center/cover no-repeat;
+  background: url('HomeBack16x9.jpg') center center/cover no-repeat;
   filter: grayscale(1);
   z-index: 0;
   pointer-events: none;
@@ -714,7 +714,7 @@ body.fullcolor.page-bg::before {
 .color-reveal {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: url('homeback16x9.jpg') center center/cover no-repeat;
+  background: url('HomeBack16x9.jpg') center center/cover no-repeat;
   z-index: 1;
   pointer-events: none;
   /* Start fully masked (hidden) */

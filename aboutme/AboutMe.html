@@ -35,7 +35,7 @@
     /* Use contain so 16:9 images display fully without cropping on tall viewports */
     .about-slide img { max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; display:block; }
     .about-text-slide { min-height: 100%; padding:2.5rem; box-sizing:border-box; /* layered background: soft white gradient over the gallery collage for continuity */
-      background-image: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.96)), url('../Gallery/gallery-background.png');
+      background-image: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.96)), url('../gallery-background.png');
       background-size: cover; background-position: center center; background-repeat: no-repeat; color:#231942; max-width:960px; margin:0 auto; overflow:auto; border-radius:8px; box-shadow: 0 6px 22px rgba(0,0,0,0.08); }
     .about-text-slide h2{ color:#e6007a; margin-top:0; }
     .about-text-slide p{ font-size:1.1rem; line-height:1.5; }
@@ -53,7 +53,7 @@
     #progressDots { display: none !important; }
 
     /* Ensure the site-wide background (gallery background) is visible on this page */
-    body.page-bg::before { background-image: url('../Gallery/gallery-background.png'); background-position: center center; background-size: 100% 100%; }
+    body.page-bg::before { background-image: url('../gallery-background.png'); background-position: center center; background-size: 100% 100%; }
   </style>
 </head>
 <body class="page-bg">
