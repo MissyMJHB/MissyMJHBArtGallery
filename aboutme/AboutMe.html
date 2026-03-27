@@ -28,12 +28,13 @@
       justify-content: flex-start; 
       transition: filter 0.4s; 
     }
-    /* About page: full-viewport vertical slides (scroll-snap) for the 4 image cuts and an info panel */
-    .about-scroll { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; }
-    .about-slide { height: 100vh; scroll-snap-align: start; position: relative; display:flex; align-items:center; justify-content:center; }
+    /* About page: vertical slides (scroll-snap) for the 4 image cuts and an info panel */
+    /* Make the scroller fill the remaining vertical space under the header so the final text slide is reachable */
+    .about-scroll { flex: 1 1 auto; width: 100%; overflow-y: auto; scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; }
+    .about-slide { min-height: 100%; scroll-snap-align: start; position: relative; display:flex; align-items:center; justify-content:center; }
     /* Use contain so 16:9 images display fully without cropping on tall viewports */
     .about-slide img { max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; display:block; }
-    .about-text-slide { padding:2.5rem; box-sizing:border-box; /* layered background: soft white gradient over the gallery collage for continuity */
+    .about-text-slide { min-height: 100%; padding:2.5rem; box-sizing:border-box; /* layered background: soft white gradient over the gallery collage for continuity */
       background-image: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.96)), url('../Gallery/gallery-background.png');
       background-size: cover; background-position: center center; background-repeat: no-repeat; color:#231942; max-width:960px; margin:0 auto; overflow:auto; border-radius:8px; box-shadow: 0 6px 22px rgba(0,0,0,0.08); }
     .about-text-slide h2{ color:#e6007a; margin-top:0; }

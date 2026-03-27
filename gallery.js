@@ -43,92 +43,80 @@ window.openAboutMe = function() {
   };
 };
 
-document.addEventListener('DOMContentLoaded', function () {
-
-  // --- Gallery Image Loader ---
+function initGallery() {
+  console.debug('gallery.js: initGallery fired');
   const galleryGrid = document.getElementById('gallery-grid');
+  
   if (galleryGrid) {
-    const extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-    let imgIndex = 1;
-    // Track visited images in localStorage
+    const maxImages = 100; // Upper limit, but we will stop early if a file is missing
     let visited = JSON.parse(localStorage.getItem('visitedGalleryImgs') || '{}');
+
+    function isVisited(path) { return visited[path]; }
     function markVisited(imgPath) {
       visited[imgPath] = true;
       localStorage.setItem('visitedGalleryImgs', JSON.stringify(visited));
     }
-    function isVisited(imgPath) {
-      return visited[imgPath];
-    }
-    function tryLoadNext() {
-      if (imgIndex > 100) return;
-      for (let ext of extensions) {
-        const imgPath = `Gallery/Gallery${imgIndex}.${ext}`;
-        const img = new window.Image();
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        img.className = 'gallery-thumb';
-        img.alt = `Artwork ${imgIndex}`;
-        img.sizes = '(max-width:900px) 90vw, 180px';
-        img.srcset = imgPath + ' 800w';
-        // assign handlers before setting src to avoid missing load events when cached
-        img.onload = function () {
-          try{
-            if (!document.querySelector(`[src="${imgPath}"]`)) {
-              // create a wrapper so we can optionally show captions later
-              const item = document.createElement('figure');
-              item.className = 'gallery-item';
-              if (isVisited(imgPath)) {
-                img.classList.add('visited');
+
+
+    // Logic to load images one by one until we hit a missing file (e.g. Gallery76.jpg)
+    for (let i = 1; i <= maxImages; i++) {
+      const imgPath = `Gallery/Gallery${i}.jpg`;
+      const img = new Image();
+      img.src = imgPath;
+      img.className = 'gallery-thumb';
+      img.loading = 'lazy';
+
+      img.onload = function() {
+        // Only add if not already in the grid (prevents double-triggers)
+        if (!document.querySelector(`img[src="${imgPath}"]`)) {
+          const item = document.createElement('figure');
+          item.className = 'gallery-item';
+          
+          if (isVisited(imgPath)) {
+            img.classList.add('visited');
+          }
+
+          item.appendChild(img);
+          galleryGrid.appendChild(item);
+
+          // Handle Captions
+          (async function(nLocal, container){
+            try {
+              const capPath = `Gallery/captions/Gallery${nLocal}.txt`;
+              const resp = await fetch(capPath);
+              if(resp && resp.ok){
+                const txt = (await resp.text()).trim();
+                if(txt){
+                  const figcap = document.createElement('figcaption');
+                  figcap.className = 'gallery-caption';
+                  figcap.textContent = txt;
+                  container.appendChild(figcap);
+                }
               }
-              item.appendChild(img);
-              // attempt to load a caption file at Gallery/captions/Gallery{n}.txt (optional)
-              (async function(){
-                try{
-                  const capPath = `Gallery/captions/Gallery${imgIndex}.txt`;
-                  const resp = await fetch(capPath);
-                  if(resp && resp.ok){
-                    const txt = (await resp.text()).trim();
-                    if(txt){
-                      const figcap = document.createElement('figcaption');
-                      figcap.className = 'gallery-caption';
-                      figcap.textContent = txt;
-                      item.appendChild(figcap);
-                    }
-                  }
-                }catch(e){}
-              })();
-              galleryGrid.appendChild(item);
-              // attach click handler on the thumbnail to open modal (use the image src)
-              img.addEventListener('click', function () { openModal(imgPath, img); });
-              console.debug('Gallery: loaded', imgPath);
-            }
-          }catch(e){ console.warn('gallery img onload handler error', e); }
-        };
-        img.onerror = function (e) { console.debug('Gallery: failed to load', imgPath, e); };
-        img.src = imgPath;
-      }
-      imgIndex++;
-      setTimeout(tryLoadNext, 30);
-    }
-    tryLoadNext();
+            } catch(e) { console.debug('Caption fetch error', e); }
+          })(i, item);
 
-    // If no images are found after a short load period, show a helpful placeholder message
-    setTimeout(function(){
-      try{
-        if(galleryGrid && galleryGrid.children.length === 0){
-          const p = document.createElement('p');
-          p.textContent = 'No gallery images were found. Place images in /Gallery named Gallery1.jpg or Gallery1.png, Gallery2.jpg/png, etc.';
-          p.style.color = '#444'; p.style.padding = '2rem'; p.style.textAlign = 'center'; p.style.fontSize = '1.05rem';
-          galleryGrid.appendChild(p);
+          // Modal Listener
+          img.addEventListener('click', () => {
+             if (typeof openModal === 'function') openModal(imgPath, img);
+          });
+          
+          console.debug('Gallery: appended', imgPath);
         }
-      }catch(e){}
-    }, 1500);
-  }
+      };
 
-  // --- Modal Popup ---
-  const modal = document.getElementById('imageModal');
-  const modalImg = document.getElementById('modalImg');
-  window.openModal = function openModal(src, thumbImg) {
+      img.onerror = function() {
+        // If Gallery76.jpg fails, we stop the debug logs here
+        console.debug('Gallery: reached end of folder at index', i);
+      };
+    }
+  }
+}
+
+// --- Modal Popup ---
+const modal = document.getElementById('imageModal');
+const modalImg = document.getElementById('modalImg');
+window.openModal = function openModal(src, thumbImg) {
     const closeBtn = document.querySelector('.close');
     if (!modal || !modalImg || !closeBtn) return;
     modal.style.display = 'flex';
@@ -145,12 +133,13 @@ document.addEventListener('DOMContentLoaded', function () {
     modal.onclick = function (e) {
       if (e.target === modal) closeModal();
     };
-  }
-
+  }  
+  /*
   // --- Back to Top Button ---
   const backToTop = document.getElementById('backToTop');
-  if (backToTop) {
-    window.addEventListener('scroll', function () {
+  if (backToTop) 
+    {
+     window.addEventListener('scroll', function () {
       if (window.scrollY > 200) {
         backToTop.style.display = 'block';
       } else {
@@ -164,7 +153,14 @@ document.addEventListener('DOMContentLoaded', function () {
   } else {
     console.warn("Element with ID 'backToTop' not found. Back to Top button functionality will not be initialized.");
   }
+    */
 
   // --- About Panels Scroll Snap & Color ---
   // (No changes needed for About Me image display)
-});
+
+// Run gallery init on DOMContentLoaded or immediately if already loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initGallery);
+} else {
+  initGallery();
+}
