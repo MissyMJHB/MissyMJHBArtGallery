@@ -160,7 +160,7 @@
         // image
         const img = document.createElement('img'); img.id = 'missyCornerImg'; img.className = 'missy-corner-img';
         // image src will use _coreBase computed in outer scope
-        img.src = _coreBase + 'Book/MissyCutOut.png';
+        img.src = _coreBase + '/Book/MissyCutOut.png';
         img.alt = 'Missy'; img.style.width = '120px'; img.style.pointerEvents = 'auto'; img.tabIndex = 0;
         // bubble
         const bubble = document.createElement('img'); bubble.id = 'missyCornerBubble'; bubble.className = 'missy-corner-bubble missy-bubble bubble-hidden';
