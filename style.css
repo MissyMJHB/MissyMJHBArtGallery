@@ -1,0 +1,1266 @@
+/* Missy nav bar styles */
+.main-nav {
+  display: flex;
+  gap: 2.2rem;
+  justify-content: center;
+  align-items: center;
+  margin: 1.2rem 0 1.8rem 0;
+  font-size: 1.25rem;
+  font-family: inherit;
+  z-index: 2;
+  position: relative;
+}
+.main-nav a {
+  color: #7c3aed;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+.main-nav a:hover {
+  color: #e6007a;
+  text-decoration: underline;
+}
+/* Site header: center title and place links beneath (consistent across pages) */
+.site-header, header#siteHeader, .gallery-header-clean { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.35rem; padding:1rem 1rem; text-align:center; }
+/* Ensure header and main content render above the decorative background pseudo-element */
+header#siteHeader, .site-header, main, .overlay, .about-scroll, #contact-section { position: relative; z-index: 10; }
+.site-header .site-title, header#siteHeader .site-title, .gallery-header-clean .site-title { margin:0; font-size:2rem; line-height:1; font-weight:700; color:inherit; }
+.site-header .main-nav, header#siteHeader .main-nav, .gallery-header-clean .main-nav { margin-top:0.45rem; gap:1.2rem; }
+.gallery-nav-clean, header#siteHeader .gallery-nav-clean { display:flex; justify-content:center; gap:1.2rem; margin-top:0.4rem; }
+@media (max-width: 900px) {
+  .site-header .site-title, header#siteHeader .site-title, .gallery-header-clean .site-title { font-size:1.6rem; }
+}
+@media (max-width: 600px) {
+  .site-header .site-title, header#siteHeader .site-title, .gallery-header-clean .site-title { font-size:1.35rem; }
+  .site-header, header#siteHeader, .gallery-header-clean { padding:0.6rem 0.8rem; }
+  .main-nav, .gallery-nav-clean { gap: 0.9rem; font-size:1rem; }
+}
+/* About Me Modal Overlay Styles */
+#aboutMeOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: none;
+}
+.aboutme-bg-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('aboutme/Aboutme500.jpg') center center/cover no-repeat;
+  filter: blur(16px) brightness(0.7);
+  z-index: 0;
+}
+.aboutme-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.85);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 32px #0006;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  max-width: 540px;
+  width: 96vw;
+  margin: 0 auto;
+}
+.aboutme-main-img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 16px #0003;
+}
+.aboutme-main-text {
+  font-size: 1.35rem;
+  color: #231942;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.aboutme-main-text h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: #e6007a;
+}
+.aboutme-main-text p {
+  margin-bottom: 1.2rem;
+  line-height: 1.5;
+}
+.aboutme-main-text blockquote {
+  font-size: 1.2rem;
+  color: #00e6e6;
+  font-style: italic;
+  margin: 1.2rem 0 0 0;
+}
+.aboutme-close-btn {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  z-index: 10;
+  background: #fff;
+  color: #e6007a;
+  font-size: 2.5rem;
+  border: 2px solid #e6007a;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  box-shadow: 0 2px 12px #0003;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.aboutme-close-btn:hover {
+  background: #e6007a;
+  color: #fff;
+}
+@media (max-width: 600px) {
+  .aboutme-content {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+    max-width: 98vw;
+    width: 98vw;
+  }
+  .aboutme-main-img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1rem;
+  }
+  .aboutme-main-text {
+    font-size: 1.05rem;
+  }
+  .aboutme-main-text h2 {
+    font-size: 1.3rem;
+  }
+  .aboutme-close-btn {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.7rem;
+  }
+}
+/* Missy corner widget image cursor pointer */
+.missy-corner-img {
+  cursor: pointer;
+}
+/* Responsive fix for contact modal on narrow screens */
+@media (max-width: 600px) {
+  .contact-modal-content {
+    width: 98vw !important;
+    max-width: 98vw !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    padding: 0.5rem 0 !important;
+  }
+  .contact-info-box {
+    width: 96vw !important;
+    min-width: unset !important;
+    font-size: 0.95rem !important;
+    padding: 0.7rem 0.5rem !important;
+  }
+  .contact-info-details {
+    font-size: 0.95rem !important;
+  }
+}
+/* Book page gallery alignment fix */
+.book-gallery {
+  display: flex;
+  background: red; min-height: 100px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2vw;
+  margin: 2vw auto 0 auto;
+  width: 100%;
+  max-width: 700px;
+  position: relative; /* ensure gallery sits above decorative background */
+  z-index: 10;
+}
+.book-gallery img {
+  width: 180px;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px #0006;
+  filter: grayscale(1);
+  transition: filter 0.4s, box-shadow 0.3s;
+  cursor: pointer;
+  background: #fff8;
+  /*right: 120px; /* move Missy to the right by her width */
+}
+@media (max-width: 900px) {
+  .book-gallery img { width: 120px; }
+}
+@media (max-width: 600px) {
+  .book-gallery img { width: 90px; }
+  .book-gallery { gap: 1vw; }
+}
+/* Gallery item captions (optional). Caption files may be placed at Gallery/captions/Gallery1.txt etc. */
+.gallery-item{ display:inline-block; width:180px; text-align:center; }
+.gallery-item img.gallery-thumb{ width:100%; height:auto; filter:grayscale(1); transition:filter 0.35s, transform 0.25s; border-radius:0.85rem; box-shadow:0 2px 12px rgba(0,0,0,0.12); }
+.gallery-item img.gallery-thumb:hover{ filter:none; transform:translateY(-4px); }
+.gallery-caption{ font-size:0.85rem; color:#231942; margin-top:0.45rem; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
+
+/* Contact Modal and About Me Modal improvements */
+.contact-modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 95vw;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+    right: 80px; /* move Missy to the right by her width on mobile */
+  justify-content: center;
+  z-index: 1000;
+  background: none;
+}
+.contact-modal-img {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px #0002;
+  display: block;
+}
+.contact-info-box {
+  position: relative;
+  min-width: 320px;
+  max-width: 90vw;
+  background: rgba(255,255,255,0.96);
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px #0003;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 1.2rem 1.5rem;
+  font-size: 1.1rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.contact-info-box h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #111;
+  text-shadow: 0 1px 4px #fff;
+}
+.contact-info-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .contact-modal-content { width: 98vw; max-width: 98vw; }
+  .contact-modal-img { max-width: 98vw; }
+  .contact-info-box { width: 90vw; font-size: 0.95rem; }
+}
+@media (max-width: 600px) {
+  .contact-modal-content { width: 100vw; max-width: 100vw; }
+  .contact-modal-img { max-width: 100vw; }
+  .contact-info-box { width: 98vw; font-size: 0.9rem; }
+}
+/* Missy bubble uses transparent PNG background, no solid fill */
+/* Missy bubble uses transparent PNG background, no solid fill */
+.missy-corner-bubble {
+  background: no-repeat center/contain;
+  color: #222;
+  border: none;
+  padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+  font-size: 1.25rem;
+  max-width: 320px;
+  min-width: 120px;
+  min-height: 80px;
+  margin-bottom: 0.7rem;
+  pointer-events: auto;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-shadow: 0 2px 8px #fff, 0 1px 1px #000, 0 0px 2px #fff;
+}
+@media (max-width: 600px) {
+  .missy-corner-img {
+    width: 100px;
+    max-width: 50vw;
+  }
+  .missy-corner-bubble {
+    font-size: 1.1rem;
+    max-width: 90vw;
+    padding: 1.5rem 1.1rem 1.5rem 1.1rem;
+  }
+}
+@media (max-width: 600px) {
+  .missy-corner-img {
+    width: 100px;
+    max-width: 50vw;
+  }
+  .missy-corner-bubble {
+    font-size: 1.1rem;
+    max-width: 90vw;
+    padding: 1rem 1.1rem;
+  }
+}
+/* Contact the Artist section styles 1442:0324 */  */
+
+/* Missy fixed root — a viewport-anchored container that holds Missy so it's never pushed by page content */
+#missy-fixed-root {
+  position: fixed !important;
+  right: 12px !important;
+  bottom: 12px !important;
+  z-index: 10000 !important;
+  pointer-events: none; /* let children opt-in */
+  overflow: visible !important;
+}
+
+/* Missy Assistant Widget (inside fixed root) */
+.missy-corner-widget {
+  position: relative !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 10000 !important; /* keep above overlays when shown */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: auto;
+  overflow: visible;
+  max-width: 98vw;
+  max-height: 98vh;
+}
+/* Missy image - default grayscale, becomes color when .color class applied */
+.missy-corner-img, #missyImg, .missy-img {
+  width: 120px;
+  max-width: 30vw;
+  height: auto;
+  margin-bottom: 0.2rem;
+  pointer-events: auto;
+  box-sizing: border-box;
+  filter: grayscale(1) brightness(0.98);
+  transition: filter 0.25s ease, transform 0.18s ease;
+  /* Ensure Missy image stays visually above bubbles (override other rules) */
+  z-index: 11000 !important;
+  position: fixed !important; /* force fixed so z-index is relative to viewport */
+  right: 12px !important;
+  bottom: 12px !important;
+}
+.missy-corner-img.color, #missyImg.color, .missy-img.color { filter: none; transform: translateY(-2px); }
+/* Ensure Missy stays visible above content while scrolling */
+.missy-corner-widget { position: fixed !important; right: 12px !important; bottom: 12px !important; }
+
+/* Force bubble below Missy using !important so inline styles can't cover it */
+.missy-bubble, .missy-corner-bubble, #missyCornerBubble, #missyBubble {
+  position: fixed !important;
+  z-index: 10000 !important;
+}
+
+/* Bubble visibility helpers: hidden by default, shown when JS removes .bubble-hidden / adds .show */
+.bubble-hidden { opacity: 0; visibility: hidden; transform: translateY(-70%); transition: opacity 0.25s ease, transform 0.25s ease; pointer-events: none; }
+.missy-bubble.show, .missy-corner-bubble.show, #missyCornerBubble.show, #missyBubble.show { opacity: 1; visibility: visible; transform: translateY(-50%); pointer-events: auto; }
+
+/* Bubble positioned to Missy's left (so it appears to the page center side) */
+.missy-bubble, .missy-corner-bubble, #missyCornerBubble, #missyBubble {
+  position: absolute;
+  right: calc(100% + 12px); /* place bubble to the left of Missy with a small gap */
+  top: -40px; /* default place slightly above Missy's top */
+  transform: none; /* position controlled by JS for fine-tuning */
+  width: 110px;
+  height: auto;
+  max-width: 28vw;
+  display: block;
+  margin: 0;
+  pointer-events: none; /* ignore pointer events until visible */
+  z-index: 10000; /* place below Missy image (Missy image uses 10005) */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+@media (max-width: 600px) {
+  .missy-corner-img, #missyImg, .missy-img {
+    width: 80px;
+    max-width: 40vw;
+  }
+  .missy-bubble, .missy-corner-bubble, #missyCornerBubble, #missyBubble {
+    right: 100%;
+    top: -45px;
+    width: 90px;
+    max-width: 60vw;
+  }
+}
+/* On very narrow screens, position bubble to the left (negative left) to avoid clipping */
+@media (max-width: 420px) {
+  .missy-bubble, .missy-corner-bubble, #missyCornerBubble, #missyBubble { left: -90px; right: auto; }
+}
+
+/* Force JS-controlled bubble positioning when Missy is inside fixed root or corner widget */
+#missy-fixed-root .missy-bubble, #missy-fixed-root .missy-corner-bubble, .missy-corner-widget .missy-bubble {
+  right: auto !important; /* allow JS to set left/top precisely */
+  transform: none !important;
+  z-index: 10000 !important;
+}
+
+#missyImg {
+  width: 120px;
+  height: auto;
+  max-width: 30vw;
+  display: block;
+  margin: 0 auto;
+}
+/* Missy bubble: always on her right (left side of image), raised by half its height */
+/* Bubble: always to Missy's right (our left), offset so arrow points at her */
+.missy-bubble {
+  position: absolute;
+  right: 110%; /* place bubble to the left of Missy, with a gap */
+  top: -55px;
+  width: 110px;
+  height: auto;
+  max-width: 28vw;
+  display: block;
+  margin: 0;
+  pointer-events: none;
+  z-index: 10000; /* ensure bubble is below Missy image */
+}
+@media (max-width: 600px) {
+  .missy-bubble {
+    right: 100%;
+    top: -45px;
+    width: 90px;
+    max-width: 60vw;
+  }
+}
+@media (max-width: 600px) {
+  #missyImg {
+    width: 80px;
+    max-width: 40vw;
+  }
+  .missy-bubble {
+    left: -90px; /* move to left of Missy image on mobile */
+    top: -45px;  /* raise by about half its height on mobile */
+    width: 90px;
+    max-width: 60vw;
+  }
+}
+#contact-section {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+  background: #f8f8f8;
+}
+#contact-section > div {
+  position: relative;
+  width: 90vw;
+  max-width: 500px;
+}
+#contact-section img {
+  width: 100%;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px #0002;
+  display: block;
+}
+#contact-section .contact-box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 70%;
+  max-width: 340px;
+  height: 170px;
+  background: #1ed760;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 12px #0002;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.2rem 1rem;
+}
+#contact-section .contact-box h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+  color: #111;
+}
+#contact-section .contact-box a {
+  color: #1877f3;
+  font-size: 1.1rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s;
+}
+#contact-section .contact-box a#contactEmail {
+  color: #111;
+}
+#contact-section .contact-box a:hover {
+  color: #e6007a;
+}
+@media (max-width: 600px) {
+  #contact-section > div {
+    max-width: 98vw;
+  }
+  #contact-section .contact-box {
+    width: 90vw;
+    max-width: 98vw;
+    height: auto;
+    min-height: 120px;
+    padding: 1rem 0.5rem;
+  }
+  #contact-section .contact-box h2 {
+    font-size: 1.1rem;
+  }
+  #contact-section .contact-box a {
+    font-size: 1rem;
+  }
+}
+/* Floating close button for About Me modal */
+#floatingCloseBtn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 9999;
+  background: #fff;
+  color: #111;
+  font-size: 2.2rem;
+  border: 2px solid #00e6e6;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  box-shadow: 0 2px 12px #0004;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+#floatingCloseBtn:hover {
+  background: #00e6e6;
+  color: #fff;
+}
+
+/* Force Missy bubble and image stacking/positioning to be consistent across pages and overrides */
+/* Put these strong rules at the end to override conflicting declarations earlier in the file */
+.missy-bubble, .missy-corner-bubble, #missyCornerBubble, #missyBubble {
+  position: fixed !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  z-index: 10000 !important; /* bubble below Missy */
+  pointer-events: none !important;
+}
+
+.missy-corner-img, #missyImg, .missy-img {
+  position: fixed !important;
+  right: 12px !important;
+  bottom: 12px !important;
+  z-index: 11000 !important; /* Missy above bubble */
+  pointer-events: auto !important;
+}
+
+#missy-fixed-root { z-index: 11100 !important; }
+
+/* Ensure JS-controlled bubble positioning inside missy-fixed-root uses left/top coordinates */
+#missy-fixed-root .missy-bubble, #missy-fixed-root .missy-corner-bubble, .missy-corner-widget .missy-bubble {
+  right: auto !important;
+  left: auto !important;
+  transform: none !important;
+}
+
+/* Scroll indicator for About Me modal */
+#scrollIndicator {
+  position: fixed;
+  left: 50%;
+  top: calc(100vh - 80px);
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.9);
+  color: #00e6e6;
+  font-size: 1.3rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 8px #0002;
+  z-index: 9998;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  animation: scroll-indicator-bounce 1.2s infinite;
+}
+@keyframes scroll-indicator-bounce {
+  0%, 100% { top: calc(100vh - 80px); }
+  50% { top: calc(100vh - 70px); }
+}
+/* Clean gallery header styles */
+.gallery-header-clean {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  padding: 2rem 0 1rem 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.gallery-header-clean .site-title {
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  color: #111;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.gallery-nav-clean {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.gallery-nav-clean .nav-link {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #111;
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.gallery-nav-clean .nav-link:hover, .gallery-nav-clean .nav-link:focus {
+  color: #e6007a;
+}
+.site-subtitle { 
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+  color: #111;
+  text-align: center;
+  letter-spacing: 0.05em;
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* Colorful, modern, mobile-first styles for the digital art gallery */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #111;
+  position: relative;
+}
+
+body.page-bg::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/gallery-background.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%; /* stretch/fill per user preference */
+  opacity: 1;
+  pointer-events: none;
+  transition: filter 0.4s;
+  filter: grayscale(1) brightness(0.97);
+}
+body.fullcolor.page-bg::before {
+  filter: none;
+}
+
+.home-bg {
+  min-height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.home-bg::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('HomeBack16x9.jpg') center center/cover no-repeat;
+  filter: grayscale(1);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.color-reveal {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('HomeBack16x9.jpg') center center/cover no-repeat;
+  z-index: 1;
+  pointer-events: none;
+  /* Start fully masked (hidden) */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 100%);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  transition: mask-image 0.3s, -webkit-mask-image 0.3s;
+}
+
+.home-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 10;
+  pointer-events: auto;
+}
+/* Default top padding for desktop */
+.home-overlay-top {
+  padding-top: 5vh;
+}
+
+@media (max-width: 600px) {
+  .home-overlay-top {
+    padding-top: 1.5vh;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+}
+.site-title {
+  position: relative;
+  z-index: 11; /* ensure title sits above nav links */
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  color: #111;
+  margin-bottom: 2rem;
+  text-align: center;
+  -webkit-user-select: none;
+  user-select: none;
+  word-break: break-word;
+}
+
+.main-nav {
+  position: relative;
+  z-index: 10; /* keep nav under the title */
+}
+
+.site-title span {
+  display: inline-block;
+  background: none !important;
+  padding: 0;
+  margin: 0;
+  line-height: 1.1;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  transition: color 0.3s;
+}
+@media (max-width: 600px) {
+  .site-title {
+    font-size: 2rem;
+    word-break: break-word;
+  }
+  .site-title span {
+    font-size: inherit;
+    padding: 0;
+    margin: 0;
+    background: none !important;
+    line-height: 1.1;
+  }
+}
+.home-nav {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .home-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 98vw;
+    margin: 0 auto;
+    padding: 0 0 1.5rem 0;
+    gap: 0;
+  }
+  .nav-link {
+    font-size: 1.1rem;
+    padding: 1rem 0.5rem;
+    width: 33vw;
+    min-width: 80px;
+    max-width: 120px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 0.5rem;
+    display: block;
+    box-sizing: border-box;
+    color: #111;
+    font-weight: bold;
+    letter-spacing: 0.03em;
+    box-shadow: 0 2px 8px #0001;
+    text-align: center;
+    margin: 0;
+  }
+  .nav-link:nth-child(1) { text-align: left; margin-left: 0.5vw; }
+  .nav-link:nth-child(2) { text-align: center; }
+  .nav-link:nth-child(3) { text-align: right; margin-right: 0.5vw; }
+  .nav-link.active {
+    background: #00e6e6;
+    color: #fff;
+  }
+}
+.nav-link {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #111;
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s, background 0.3s;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  border-radius: 0.5rem;
+}
+.nav-link:hover, .nav-link:focus {
+  color: #e6007a;
+}
+/* Only the active nav link gets a colored bar */
+.nav-link.active {
+  background: #00e6e6;
+  color: #fff;
+  filter: none !important;
+}
+.nav-link.visited {
+  color: #00e6e6;
+  filter: none !important;
+}
+
+/* Gallery page background */
+
+/* Progress dots shown under the title to indicate visited pages */
+.progress-dots{ display:inline-flex; gap:8px; margin-top:0.6rem; margin-bottom:0.6rem; }
+/* Hide the three small progress dots site-wide (user requested) */
+#progressDots { display: none !important; }
+.progress-dots .dot{ display:inline-block; width:12px; height:12px; border-radius:50%; background:#ddd; box-shadow:0 1px 3px #0002; }
+.progress-dots .dot.on{ background: #00e6e6; box-shadow:0 0 8px #00e6e6aa; }
+
+/* Ensure gallery images remain grayscale unless hovered or visited */
+.book-gallery img{ filter: grayscale(1); transition: filter 0.35s, box-shadow 0.25s; }
+.book-gallery img:hover, .book-gallery img.visited, .book-gallery img.color{ filter: none; }
+
+
+
+
+  /* Add body-specific styles here if needed */
+
+.gallery-bg {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  background: url('Gallery/gallery-backgroundbw.png') repeat;
+  background-size: 600px auto;
+  pointer-events: none;
+}
+/* Remove ::before, use direct background on .gallery-bg for reliability */
+.gallery-header {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  padding: 2rem 0 1rem 0;
+  text-align: center;
+}
+.gallery-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #111;
+  margin-bottom: 0.5rem;
+}
+.gallery-nav {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.gallery-nav .nav-link {
+  font-size: 1.2rem;
+}
+/* ...existing gallery grid and thumb styles... */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #e6007a;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.gallery-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 2rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover {
+  color: #ffb300;
+}
+.hero {
+  text-align: center;
+  padding: 4rem 1rem 2rem 1rem;
+  background: linear-gradient(120deg, #e6007a 0%, #00e6e6 100%);
+}
+.hero h1 {
+  font-size: 2.5rem;
+  margin: 0 0 1rem 0;
+  color: #fff;
+  letter-spacing: 3px;
+}
+.hero-sub {
+  font-size: 1.2rem;
+  color: #fff;
+  opacity: 0.8;
+}
+.about-section {
+  background: #231942;
+  padding: 2rem 0 3rem 0;
+  overflow-x: hidden;
+}
+.about-section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #ffb300;
+}
+.about-panels {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 2rem;
+  padding: 0 2rem;
+  justify-content: center;
+}
+.about-panel {
+  flex: 0 0 70vw;
+  max-width: 400px;
+  min-width: 280px;
+  background: #2d1457;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px #0008;
+  margin-bottom: 1rem;
+  scroll-snap-align: center;
+  filter: grayscale(1);
+  transition: filter 0.4s, box-shadow 0.3s;
+  position: relative;
+  text-align: center;
+}
+.about-panel.active {
+  filter: grayscale(0);
+  box-shadow: 0 8px 32px #e6007a88;
+}
+.about-panel img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 1.5rem 1.5rem 0 0;
+}
+.bio {
+  padding: 1rem;
+  color: #fff;
+  font-size: 1rem;
+}
+.gallery-section {
+  background: transparent;
+  padding: 2rem 0 4rem 0;
+}
+.gallery-section h2 {
+  text-align: center;
+  color: #00e6e6;
+  margin-bottom: 2rem;
+}
+
+/* Responsive gallery grid and image sizing */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin: 2vw auto;
+  max-width: 1200px;
+  padding-bottom: 2.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  justify-items: center;
+}
+.gallery-thumb {
+  width: 100%;
+  max-width: 180px;
+  aspect-ratio: 1/1.1;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px #0006;
+  filter: grayscale(1);
+  transition: filter 0.4s, box-shadow 0.3s;
+  cursor: pointer;
+  background: #fff8;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    max-width: 98vw;
+    gap: 1rem;
+  }
+  .gallery-thumb {
+    max-width: 120px;
+  }
+}
+@media (max-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    max-width: 100vw;
+    gap: 0.7rem;
+    padding: 0 0.5vw 2vw 0.5vw;
+  }
+  .gallery-thumb {
+    width: 90vw !important;
+    max-width: 98vw !important;
+    height: auto !important;
+    border-radius: 1.1rem;
+    margin: 0 auto 0.7rem auto;
+    box-shadow: 0 2px 10px #0002;
+  }
+}
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    max-width: 98vw;
+  }
+  .gallery-thumb {
+    max-width: 180px;
+  }
+}
+@media (max-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    max-width: 100vw;
+  }
+  .gallery-thumb {
+    max-width: 120px;
+  }
+}
+.gallery-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  background: url('Gallery/gallery-backgroundbw.png') center center/cover no-repeat;
+  opacity: 1;
+  pointer-events: none;
+  filter: grayscale(1);
+}
+.gallery-thumb.visited {
+  filter: grayscale(0) !important;
+}
+.gallery-thumb:hover,
+.gallery-thumb:focus {
+  filter: grayscale(0);
+  box-shadow: 0 4px 24px #00e6e688;
+}
+#backToTop {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #e6007a;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 12px #0008;
+  opacity: 0.7;
+  z-index: 200;
+  transition: opacity 0.2s, background 0.2s;
+}
+#backToTop:hover {
+  opacity: 1;
+  background: #ffb300;
+  color: #231942;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 300;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background: url('Gallery/gallery-backgroundbw.png') repeat;
+  background-size: 600px auto;
+  /* No grayscale filter for new image */
+  align-items: center;
+  justify-content: center;
+}
+/* Gallery/About Me modal image zoomed and centered */
+.modal-content {
+  display: block;
+  margin: 4vh auto;
+  width: 90vw;
+  max-width: 800px;
+  max-height: 88vh;
+  height: auto;
+  object-fit: contain;
+  border-radius: 1.2rem;
+  box-shadow: 0 8px 32px #e6007a88;
+  background: #fff;
+}
+@media (max-width: 700px) {
+  .modal-content {
+    max-width: 98vw;
+    width: 98vw;
+    border-radius: 0.7rem;
+  }
+}
+@media (max-width: 400px) {
+  .modal-content {
+    max-width: 100vw;
+    border-radius: 0.3rem;
+  }
+}
+ /* ...existing styles... */
+ /* ...your media queries below... */
+
+  @media (max-width: 400px) {
+    .modal-content {
+      max-width: 100vw;
+      border-radius: 0;
+    }
+  }
+@media (max-width: 700px) {
+  .modal-content {
+    max-width: 100vw;
+    width: 100vw;
+    border-radius: 0;
+  }
+}
+.close {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  color: #111;
+  font-size: 2.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 400;
+  transition: color 0.2s;
+}
+.close:hover {
+  color: #ffb300;
+}
+@media (max-width: 600px) {
+  .about-panel {
+    flex: 0 0 90vw;
+    max-width: 95vw;
+  }
+  .about-panels {
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+  .gallery-grid {
+    gap: 0.7rem;
+    padding: 0 0.5rem;
+  }
+  #backToTop {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+.color-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: color;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 45%,
+    #fff 50%,
+    transparent 55%,
+    transparent 100%
+  );
+  opacity: 0.7;
+  transition: background-position 0.5s;
+}
+
+/* Utility class to hide Missy bubbles by default */
+.bubble-hidden {
+  display: none;
+}
+
+/* Contact modal (home) override for centering */
+#contactModal {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#closeContactModal {
+  z-index: 2;
+}
+
+/* Contact links styling */
+.contact-link-fb {
+  color: #1877f3;
+  text-decoration: underline;
+}
+.contact-link-phone,
+.contact-link-email {
+  color: #111;
+  text-decoration: underline;
+}

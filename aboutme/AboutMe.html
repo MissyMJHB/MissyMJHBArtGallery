@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Missy - Missy Art Gallery</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="icon" href="../Book/MissyCutOut.png">
+  <style>
+    /* Grayscale filter for locked mode (scoped to site-grayscale to avoid applying to fixed UI elements like Missy) */
+    body.site-grayscale .aboutme-img-container {
+      filter: none; /* background handled via image; keep content dim by adjusting opacity if needed */
+    }
+    /* Leave navigation highlights in grayscale mode able to pop */
+    body.site-grayscale .main-nav a:hover,
+    body.site-grayscale .main-nav a:focus,
+    body.site-grayscale .main-nav a:active {
+      filter: none !important;
+      color: #e6007a !important;
+    }
+    body { 
+      margin: 0; 
+      padding: 0; 
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: flex-start; 
+      transition: filter 0.4s; 
+    }
+    /* About page: vertical slides (scroll-snap) for the 4 image cuts and an info panel */
+    /* Make the scroller fill the remaining vertical space under the header so the final text slide is reachable */
+    .about-scroll { flex: 1 1 auto; width: 100%; overflow-y: auto; scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; }
+    .about-slide { min-height: 100%; scroll-snap-align: start; position: relative; display:flex; align-items:center; justify-content:center; }
+    /* Use contain so 16:9 images display fully without cropping on tall viewports */
+    .about-slide img { max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; display:block; }
+    .about-text-slide { min-height: 100%; padding:2.5rem; box-sizing:border-box; /* layered background: soft white gradient over the gallery collage for continuity */
+      background-image: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.96)), url('../gallery-background.png');
+      background-size: cover; background-position: center center; background-repeat: no-repeat; color:#231942; max-width:960px; margin:0 auto; overflow:auto; border-radius:8px; box-shadow: 0 6px 22px rgba(0,0,0,0.08); }
+    .about-text-slide h2{ color:#e6007a; margin-top:0; }
+    .about-text-slide p{ font-size:1.1rem; line-height:1.5; }
+
+    /* Slide navigation dots (right side) */
+    .about-dots { position: fixed; right: 1rem; top: 50%; transform: translateY(-50%); display:flex; flex-direction:column; gap:0.5rem; z-index:1200; }
+    .about-dot { width:12px; height:12px; border-radius:50%; background:rgba(255,255,255,0.6); border:none; cursor:pointer; padding:0; }
+    .about-dot.active { background:#e6007a; box-shadow:0 0 6px #e6007a99; }
+    @media (max-width:600px){ .about-dots { right: 0.6rem; } }
+
+    .back-to-top { position: fixed; right: 2vw; bottom: 2vw; background: #e6007a; color: #fff; border: none; border-radius: 50%; width: 48px; height: 48px; font-size: 2rem; box-shadow: 0 2px 12px #0003; cursor: pointer; display: none; z-index: 2000; transition: background 0.2s; }
+    .back-to-top:hover { background: #7c3aed; }
+
+    /* Hide the page progress dots for this page (user requested) */
+    #progressDots { display: none !important; }
+
+    /* Ensure the site-wide background (gallery background) is visible on this page */
+    body.page-bg::before { background-image: url('../gallery-background.png'); background-position: center center; background-size: 100% 100%; }
+  </style>
+</head>
+<body class="page-bg">
+  <h1 class="site-title" id="animatedTitle"><span id="wordMissy">Missy</span> <span id="wordArt">Art</span> <span id="wordGallery">Gallery</span></h1>
+  <nav class="main-nav">
+    <a href="../index.html">Home</a>
+    <a href="../gallery.html">Gallery</a>
+    <a href="../contact.html" id="contactLink">Contact</a>
+  </nav>
+  <div class="about-scroll" id="aboutScroll" role="region" aria-label="About Missy slides">
+    <section class="about-slide"><img src="AboutmeCut1.png" alt="Missy portrait 1" /></section>
+    <section class="about-slide"><img src="AboutmeCut2.png" alt="Missy portrait 2" /></section>
+    <section class="about-slide"><img src="AboutmeCut3.png" alt="Missy portrait 3" /></section>
+    <section class="about-slide"><img src="AboutmeCut4.png" alt="Missy portrait 4" /></section>
+    <section class="about-text-slide" id="aboutText">
+      <h2>About Missy</h2>
+      <p>Missy is a Daughter, a Mother, and a Child of God. Missy loves her family and animals. She also loves to meet new people and make new friends. Even her business is focused on people, giving her the opportunity to meet new people. She has made a difference in many lives.</p>
+      <blockquote>"I love God, friends, family & animals. I love to paint & write poetry. I especially love to be free."</blockquote>
+    </section>
+  </div>
+  <script src="../core.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      try{ if(!document.body.classList.contains('fullcolor')) document.body.classList.add('site-grayscale'); }catch(e){}
+      try { localStorage.setItem('visited_about', '1'); } catch(e) {}
+
+      // Build slide navigation dots and wire intersection observer
+      try{
+        const aboutScroll = document.getElementById('aboutScroll');
+        if(aboutScroll){
+          // Only create dots for image slides (.about-slide) so count matches images not the final text slide
+          const slides = Array.from(aboutScroll.querySelectorAll('.about-slide'));
+          const dots = document.createElement('div'); dots.className = 'about-dots'; dots.id = 'aboutDots'; dots.setAttribute('role','navigation'); dots.setAttribute('aria-label','About slides');
+          slides.forEach((s,i)=>{
+            const btn = document.createElement('button'); btn.className = 'about-dot'; btn.setAttribute('aria-label','Go to slide ' + (i+1));
+            btn.addEventListener('click', function(){ s.scrollIntoView({behavior:'smooth'}); });
+            dots.appendChild(btn);
+          });
+          document.body.appendChild(dots);
+
+          const io = new IntersectionObserver((entries)=>{
+            entries.forEach(entry=>{
+              if(entry.isIntersecting){
+                // Determine index among image slides; if the text slide is visible, set idx to last image index + 1 (keeps no dot highlighted)
+                const visible = entry.target;
+                const imgSlides = Array.from(aboutScroll.querySelectorAll('.about-slide'));
+                const idx = imgSlides.indexOf(visible);
+                const all = document.querySelectorAll('.about-dot');
+                all.forEach((b,bi)=> b.classList.toggle('active', bi===idx));
+              }
+            });
+          }, {root: aboutScroll, threshold: 0.6});
+
+          // Observe only image slides plus the text slide (to clear active state when text slide shown)
+          const toObserve = Array.from(aboutScroll.querySelectorAll('.about-slide, .about-text-slide'));
+          toObserve.forEach(s=> io.observe(s));
+          // set initial active
+          setTimeout(()=>{ document.querySelectorAll('.about-dot')[0]?.classList.add('active'); }, 100);
+        }
+      }catch(e){ console.warn('about dots failed', e); }
+
+    });
+  </script>
+
+<!-- Debug loader: if ?debug=1 or localStorage.debug=1 then load assets/logger.js and randomizer -->
+<script>
+  (function(){
+    const isDebug = /[?&]debug=1/.test(location.search) || localStorage.getItem('debug') === '1';
+    if(!isDebug) return;
+    const s1 = document.createElement('script'); s1.src = '../assets/logger.js'; s1.defer = true; document.head.appendChild(s1);
+    const s2 = document.createElement('script'); s2.src = '../assets/test-item-randomizer.browser.js'; s2.defer = true; document.head.appendChild(s2);
+    s1.onload = function(){ try{ if(window.Logger && typeof window.Logger.init === 'function') window.Logger.init({autoCapture:false, writeToFile:false}); window.Logger.log('AboutMe debug enabled'); }catch(e){} };
+    s2.onload = function(){ try{ setTimeout(function(){ const missy = document.querySelector('#missyCornerImg, #missyImg, .missy-corner-img, .missy-img'); if(missy && window.Logger){ missy.addEventListener('mouseenter', ()=>window.Logger.log('missy:mouseenter')); missy.addEventListener('click', ()=>window.Logger.log('missy:click')); missy.addEventListener('touchstart', ()=>window.Logger.log('missy:touchstart')); } if(window._randomizer && window.Logger) window.Logger.log('Randomizer ready: _randomizer.pick("weapons",3)'); },300); }catch(e){} };
+  })();
+</script>
+
+<!-- Per-page Missy widget removed — canonical Missy is provided by core.js -->
+</body>
+</html>
