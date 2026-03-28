@@ -3,15 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallery - Missy Art Gallery</title>
+  <title>About - Missy Art Gallery</title>
   <link rel="stylesheet" href="assets/style.css">
-  <link rel="icon" href="assets/favicon.png">
+  <link rel="icon" href="assets/MissyCutOut.png">
 </head>
 <body>
   <div class="page-layout">
-    <main class="gallery-main">
-      <div id="gallery-grid" class="gallery-grid"></div>
-      <button id="loadMoreBtn">Load More</button>
+    <main class="gallery-main about-slides about-page-bg">
+      <!-- Removed duplicate heading -->
+      <div class="about-slides-container">
+        <img src="assets/about1.png" alt="About Slide 1" class="about-slide">
+        <img src="assets/about2.png" alt="About Slide 2" class="about-slide">
+        <img src="assets/about3.png" alt="About Slide 3" class="about-slide">
+        <img src="assets/about4.png" alt="About Slide 4" class="about-slide">
+      </div>
+      <p>Information about Missy and her art will go here.</p>
     </main>
     <aside class="sidebar-nav">
       <nav class="side-links">
@@ -21,7 +27,7 @@
         <a href="contact.html">Contact</a>
       </nav>
       <div class="vertical-heading-flex">
-        <span>Gallery</span>
+        <span>About the Artist</span>
       </div>
       <div class="sidebar-bottom">
         <button id="backToTopBtn" title="Back to Top">↑</button>
@@ -31,7 +37,6 @@
     </aside>
   </div>
   <div class="color-reveal"></div>
-  <script src="assets/gallery.js"></script>
   <script src="assets/color-reveal.js"></script>
   <!-- hamburger.js removed -->
 </body>

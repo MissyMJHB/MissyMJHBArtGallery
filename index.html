@@ -1,68 +1,23 @@
 <!DOCTYPE html>
-<!-- 1442:0324 -->
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Digital Art Gallery</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="Book/MissyCutOut.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Missy Art Gallery - Home</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="assets/MissyCutOut.png">
 </head>
-<body class="page-bg">
-    <div class="home-bg">
-      <div class="color-reveal"></div>
-      <div class="home-overlay home-overlay-top">
-        <h1 class="site-title" id="animatedTitle">
-          <span id="wordMissy">Missy</span> <span id="wordArt">Art</span> <span id="wordGallery">Gallery</span>
-        </h1>
-        <nav class="main-nav">
-          <!-- Home link omitted on homepage -->
-          <a href="gallery.html">Gallery</a>
-          <a href="aboutme/AboutMe.html">About</a>
-          <a href="contact.html" id="contactLink">Contact</a>
-        </nav>
-        <div class="site-subtitle" id="animatedSubtitle">Make your day brighter</div>
-                <!-- Contact Modal -->
-                <div id="contactModal" class="contact-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:2000;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;">
-                  <div class="contact-modal-content" style="background:#fff;padding:2rem 2.5rem;border-radius:1.2rem;box-shadow:0 2px 16px #0003;position:relative;max-width:90vw;width:350px;text-align:center;">
-                    <button id="closeContactModal" style="position:absolute;top:1rem;right:1rem;font-size:1.5rem;background:none;border:none;cursor:pointer;color:#e6007a;">&times;</button>
-                    <h2>Contact</h2>
-                    <p>Email: <a href="mailto:your@email.com">your@email.com</a></p>
-                    <p>Instagram: <a href="https://instagram.com/yourprofile" target="_blank">@yourprofile</a></p>
-                  </div>
-                </div>
-  <!-- Per-page Missy markup and scripts removed — using canonical Missy from core.js -->
-  <!-- Modal for full image view (shared with gallery) -->
-  <div class="modal" id="imageModal">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="modalImg" alt="" />
-  </div>
-
-  <script src="core.js?v=20260327T015216Z"></script>
-  <script src="gallery.js?v=20260327T015216Z"></script>
-  
-  <script>
-    // Contact Modal logic (kept)
-    document.addEventListener('DOMContentLoaded', function () {
-      const contactLink = document.getElementById('contactLink');
-      const contactModal = document.getElementById('contactModal');
-      const closeContactModal = document.getElementById('closeContactModal');
-      contactLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        contactModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      });
-      closeContactModal.addEventListener('click', function() {
-        contactModal.style.display = 'none';
-        document.body.style.overflow = '';
-      });
-      contactModal.addEventListener('click', function(e) {
-        if (e.target === contactModal) {
-          contactModal.style.display = 'none';
-          document.body.style.overflow = '';
-        }
-      });
-    });
-  </script>
+<body class="home-bg">
+  <header>
+    <h1>Missy Art Gallery</h1>
+    <nav class="side-links">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  <script src="assets/color-reveal.js"></script>
+  <script src="assets/home-anim.js"></script>
 </body>
 </html>

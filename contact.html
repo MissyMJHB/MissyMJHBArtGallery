@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Contact Missy - Missy Art Gallery</title>
-<link rel="stylesheet" href="style.css">
-<style>
-  html,body{height:100%;margin:0;}
-  body{background-image:url('aboutme/ContactMe.png');background-size:cover;background-position:center;background-repeat:no-repeat;height:100vh;overflow:hidden;display:flex;flex-direction:column;color:#fff;}
-  .topbar{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;background:linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.0));position:relative;z-index:2;}
-  .site-title{font-weight:700}
-  .nav{display:flex;gap:1rem;}
-  .overlay{margin:auto;background:rgba(0,0,0,0.55);padding:2rem;border-radius:12px;max-width:520px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,0.6);} 
-  a.button{display:inline-block;margin-top:0.5rem;padding:0.5rem 1rem;background:#e6007a;color:#fff;border-radius:8px;text-decoration:none;}
-  @media(max-width:600px){ .overlay{margin:1rem; width:calc(100% - 2rem);} .topbar{padding:.6rem 1rem}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Missy Art Gallery</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="assets/MissyCutOut.png">
 </head>
 <body>
-<header id="siteHeader" class="site-header" role="banner">
-  <h1 class="site-title">Missy Art Gallery</h1>
-  <nav class="main-nav" aria-label="Main navigation">
-    <a href="index.html">Home</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="aboutme/AboutMe.html">About</a>
-  </nav>
-</header>
-
-<main role="main" aria-labelledby="contactHeading" style="flex:1;display:flex;align-items:center;justify-content:center;pointer-events:none;">
-  <section class="overlay" aria-labelledby="contactHeading" style="pointer-events:auto;">
-    <h1 id="contactHeading">Contact Missy</h1>
-    <p><strong>Name:</strong> M.J. Helm</p>
-    <p><strong>Facebook:</strong> <a href="https://www.facebook.com/MJHB65/" target="_blank" rel="noopener" class="button">Missy Art Gallery</a></p>
-    <p><strong>Email:</strong> <a href="mailto:MJHArtist65@Gmail.com" class="button">MJHArtist65@Gmail.com</a></p>
-    <p><strong>Phone:</strong> <a href="tel:+15022962507" class="button">(502) 296-2507</a></p>
-    <p style="margin-top:1rem;font-size:.95rem;opacity:.95">Click the email or phone button to reach Missy directly. Thank you for visiting!</p>
-  </section>
-</main>
-
-<script src="core.js"></script>
+  <div class="page-layout">
+    <main class="gallery-main">
+      <!-- Contact window with background image -->
+      <div class="contact-window">
+        <div class="contact-info">
+          <p><strong>Name:</strong> M.J. Helm</p>
+          <p><strong>Phone:</strong> <a href="tel:5022962507">502-296-2507</a></p>
+          <p><strong>Email:</strong> <a href="mailto:MJHArtist65@Gmail.com">MJHArtist65@Gmail.com</a></p>
+          <p><strong>Facebook:</strong> <a href="https://www.facebook.com/MJHB65/" target="_blank" rel="noopener">facebook.com/MJHB65</a></p>
+        </div>
+      </div>
+    </main>
+    <aside class="sidebar-nav">
+      <nav class="side-links">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="vertical-heading-flex">
+        <span>Contact the Artist</span>
+      </div>
+      <div class="sidebar-bottom">
+        <button id="backToTopBtn" title="Back to Top">↑</button>
+        <div class="missy-spacer"></div>
+        <div id="missy-widget-placeholder"></div>
+      </div>
+    </aside>
+  </div>
+  <!-- hamburger.js removed -->
+  <script src="assets/color-reveal.js"></script>
 </body>
 </html>
