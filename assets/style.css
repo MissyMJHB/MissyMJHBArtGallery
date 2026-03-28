@@ -1,51 +1,38 @@
-/* Home page background and layout */
-body.home-bg {
-  background: url('home-bg.jpg') no-repeat center center fixed;
-  background-size: cover;
-  min-height: 100vh;
+/* Vertical animated color stripe overlay for all pages */
+
+  /* Animated color wave mask for color background layer */
+  .magic-color, .home-magic-color {
+    clip-path: circle(0px at center);
+    transition: clip-path 0.1s ease-out;
+    mask-image: linear-gradient(90deg, transparent 40%, black 48%, black 52%, transparent 60%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 40%, black 48%, black 52%, transparent 60%);
+    mask-size: 200% 100%;
+    -webkit-mask-size: 200% 100%;
+    mask-position: 100% 0;
+    -webkit-mask-position: 100% 0;
+    animation: color-wave-move 6s linear infinite;
+  }
+  @keyframes color-wave-move {
+    0% {
+      mask-position: 100% 0;
+      -webkit-mask-position: 100% 0;
+    }
+    100% {
+      mask-position: -100% 0;
+      -webkit-mask-position: -100% 0;
+    }
+  }
+/* Center header and h1 for home page */
+.home-bg header {
   width: 100vw;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  position: relative;
-}
-
-body.home-bg::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: url('home-bg.jpg') no-repeat center center fixed;
-  background-size: cover;
-  filter: grayscale(1);
-  opacity: 0.5; /* Adjusted opacity for better visibility */
-  z-index: 0;
-  pointer-events: none;
-  /* Remove any other background overlays for home */
-}
-
-.home-bg header {
-  width: 100vw;
   background: rgba(255,255,255,0.85);
   text-align: center;
   padding: 2.5em 0 1.5em 0;
   box-sizing: border-box;
-}
-@media (min-width: 700px) {
-  .home-bg header {
-    max-width: 900px;
-    margin: 2.5em auto 0 auto;
-    border-radius: 18px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.13);
-    padding: 0.7em 0 0.5em 0;
-    width: 90vw;
-  }
 }
 .home-bg h1 {
   margin: 0 0 0.5em 0;
@@ -53,11 +40,138 @@ body.home-bg::before {
   font-family: 'Constantia', serif;
   color: #222;
   letter-spacing: 0.05em;
+  text-align: center;
 }
-  display: flex;
-  flex-direction: row;
-  z-index: 0; /* Ensure background is behind content */
-  pointer-events: none; /* Allow clicks to pass through */
+/* Contact page image and yellow text bubbles overlay */
+.contact-image-bubbles {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  align-items: center;
+  justify-items: center;
+  min-height: 420px;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 700px;
+}
+.contact-art-img {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  display: block;
+}
+.bubble {
+  background: #ffe066;
+  color: #222;
+  border-radius: 2em;
+  padding: 0.7em 1.4em;
+  font-size: 1.1em;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  border: 2px solid #fffbe6;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  z-index: 2;
+  transition: transform 0.2s;
+}
+.bubble a { color: #222; text-decoration: underline; }
+/* Improved bubble positions for clarity */
+/* Pixel-based for more consistent overlay */
+.bubble-name { top: 24px; left: 32px; }
+.bubble-phone { top: 24px; right: 32px; }
+.bubble-email { bottom: 32px; left: 32px; }
+.bubble-fb { bottom: 32px; right: 32px; }
+@media (max-width: 700px) {
+  .contact-image-bubbles {
+    max-width: 98vw;
+    min-height: 320px;
+  }
+  .contact-art-img { max-width: 98vw; }
+  .bubble { font-size: 0.95em; padding: 0.5em 1em; }
+  .bubble-name { top: 8px; left: 8px; }
+  .bubble-phone { top: 8px; right: 8px; }
+  .bubble-email { bottom: 8px; left: 8px; }
+  .bubble-fb { bottom: 8px; right: 8px; }
+  .bubble-name {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    justify-self: start;
+    align-self: start;
+  }
+  .bubble-phone {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    justify-self: end;
+    align-self: start;
+  }
+  .bubble-email {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+    justify-self: start;
+    align-self: end;
+  }
+  .bubble-fb {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+    justify-self: end;
+    align-self: end;
+  }
+}
+.bg-layer {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+}
+
+.cursed-bw {
+  background-image: url('bgbw.png');
+}
+
+.magic-color {
+  background-image: url('bg.png');
+  clip-path: circle(0px at center);
+  transition: clip-path 0.1s ease-out;
+}
+
+/* Home page specific background images */
+.home-cursed-bw {
+  background-image: url('home-bgbw.jpg');
+}
+.home-magic-color {
+  background-image: url('home-bg.jpg');
+  clip-path: circle(0px at center);
+  transition: clip-path 0.1s ease-out;
+}
+
+/* Magic background color wave effect */
+#magic-bg-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
+
+.bg-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cursed-bw {
+  background-image: url('bgbw.png');
+}
+
+.magic-color {
+  background-image: url('bg.png');
+  clip-path: circle(0px at center);
+  transition: clip-path 0.1s ease-out;
+}
+
+/* ...existing code for header and other elements... */
   background: url('bg.png') no-repeat center center fixed; /* Background image */
   background-size: cover; /* Cover entire viewport */
   filter: grayscale(1); /* Grayscale effect */
@@ -218,17 +332,8 @@ body > * {
   z-index: 2;
 }
 
-/* Color reveal overlay for home page color wave */
-.color-reveal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-  pointer-events: none;
-  /* The mask and background will be set by JS */
-}
+
+/* Remove legacy .color-reveal overlay, now handled by .magic-color and .home-magic-color */
 
 
 /* Sidebar navigation styles */

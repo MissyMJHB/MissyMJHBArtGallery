@@ -8,6 +8,11 @@
   <link rel="icon" href="assets/favicon.png">
 </head>
 <body>
+  <!-- Magic background effect: color wave reveal -->
+  <div id="magic-bg-container">
+    <div class="bg-layer cursed-bw"></div>
+    <div class="bg-layer magic-color"></div>
+  </div>
   <div class="page-layout">
     <main class="gallery-main">
       <div id="gallery-grid" class="gallery-grid"></div>
@@ -24,15 +29,13 @@
         <span>Gallery</span>
       </div>
       <div class="sidebar-bottom">
-        <button id="backToTopBtn" title="Back to Top">↑</button>
+        <button id="backToTopBtn" title="Back to Top"></button>
         <div class="missy-spacer"></div>
         <div id="missy-widget-placeholder"></div>
       </div>
     </aside>
   </div>
-  <div class="color-reveal"></div>
   <script src="assets/gallery.js"></script>
   <script src="assets/color-reveal.js"></script>
-  <!-- hamburger.js removed -->
 </body>
 </html>
