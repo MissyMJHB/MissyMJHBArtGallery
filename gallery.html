@@ -3,43 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Missy Art Gallery</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="/Book/MissyCutOut.png">
+  <title>Gallery - Missy Art Gallery</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="assets/favicon.png">
 </head>
-<body class="page-bg">
-  <header class="gallery-header-clean">
-    <h1 class="site-title" id="animatedTitle"><span id="wordMissy">Missy</span> <span id="wordArt">Art</span> <span id="wordGallery">Gallery</span></h1>
-    <nav class="gallery-nav-clean" style="display:flex;justify-content:center;gap:2rem;">
-      <a href="index.html" class="nav-link" id="homeLink">Home</a>
-      <a href="gallery.html" class="nav-link" id="galleryLink">Gallery</a>
-      <a href="aboutme/AboutMe.html" class="nav-link" id="aboutLink">About</a>
-      <a href="contact.html" class="nav-link" id="contactLink">Contact</a>
-    </nav>
-  </header>
-
-  <div id="gallery-grid" class="book-gallery"></div>
-
-  <!-- Canonical Missy provided by core.js; per-page Missy widget removed from gallery.html -->
-
-  <!-- Debug loader (loads logger + randomizer when debug enabled) -->
-  <script>
-  (function(){
-    try {
-      var dbg = (location.search.indexOf('debug=1')!==-1) || (localStorage && localStorage.debug==='1');
-      if (!dbg) return;
-      var s1 = document.createElement('script'); s1.src = 'assets/logger.js'; s1.defer = true; document.head.appendChild(s1);
-      var s2 = document.createElement('script'); s2.src = 'assets/test-item-randomizer.browser.js'; s2.defer = true; document.head.appendChild(s2);
-      console.log('Debug loader: logger + randomizer queued');
-    } catch(e){console.warn('debug loader failed', e);} 
-  })();
-  </script>
-  <script src="core.js?v=20260327T015216Z"></script>
-  <script>
-    // Mark gallery visited for color unlock (redundant but safe)
-    try { localStorage.setItem('visited_gallery','1'); } catch(e) {}
-  </script>
-  <script src="gallery.js?v=20260327T015216Z"></script>
-  <button id="backToTop" title="Back to top">▲</button>
+<body>
+  <div class="page-layout">
+    <main class="gallery-main">
+      <div id="gallery-grid" class="gallery-grid"></div>
+      <button id="loadMoreBtn">Load More</button>
+    </main>
+    <aside class="sidebar-nav">
+      <nav class="side-links">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="vertical-heading-flex">
+        <span>Gallery</span>
+      </div>
+      <div class="sidebar-bottom">
+        <button id="backToTopBtn" title="Back to Top">↑</button>
+        <div class="missy-spacer"></div>
+        <div id="missy-widget-placeholder"></div>
+      </div>
+    </aside>
+  </div>
+  <div class="color-reveal"></div>
+  <script src="assets/gallery.js"></script>
+  <script src="assets/color-reveal.js"></script>
+  <!-- hamburger.js removed -->
 </body>
 </html>

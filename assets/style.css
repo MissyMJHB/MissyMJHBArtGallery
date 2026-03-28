@@ -57,12 +57,12 @@ body.home-bg::before {
 .home-bg .side-links {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 1.2em;
-  margin-bottom: 0;
-}
-/* Center nav links for index.html and all pages */
+  z-index: 0; /* Ensure background is behind content */
+  pointer-events: none; /* Allow clicks to pass through */
+  background: url('bg.png') no-repeat center center fixed; /* Background image */
+  background-size: cover; /* Cover entire viewport */
+  filter: grayscale(1); /* Grayscale effect */
+  opacity: 1; /* Fully opaque */
 .side-links {
   display: flex;
   flex-direction: row;
@@ -72,6 +72,13 @@ body.home-bg::before {
   gap: 1.2em;
 }
 @media (max-width: 900px) {
+  position: fixed !important; /* Fixed position for overlay */
+  top: 0 !important; /* Align to top */
+  left: 0 !important; /* Align to left */
+  width: 100vw !important; /* Full viewport width */
+  height: 100vh !important; /* Full viewport height */
+  z-index: 1 !important; /* Above background but below content */
+  pointer-events: none !important; /* Allow clicks to pass through */
   .side-links {
     gap: 0.5em;
   }
@@ -178,19 +185,6 @@ body:not(.home-bg)::before {
 }
 
 /* Color reveal overlay for wave effect */
-.color-reveal {
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  background: url('bg.png') center center/cover no-repeat;
-  z-index: 1;
-  pointer-events: none;
-  /* Start fully hidden (right edge at 100%) */
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.color-reveal.active {
-  clip-path: inset(0 0 0 0);
-}
 body:not(.home-bg) > * {
   position: relative;
   z-index: 2;
@@ -210,9 +204,22 @@ body:not(.home-bg)::before {
   pointer-events: none;
 }
 
+
 body > * {
   position: relative;
+  z-index: 2;
+}
+
+/* Color reveal overlay for home page color wave */
+.color-reveal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 1;
+  pointer-events: none;
+  /* The mask and background will be set by JS */
 }
 
 
