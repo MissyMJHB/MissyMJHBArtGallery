@@ -54,7 +54,6 @@ body.home-bg::before {
   color: #222;
   letter-spacing: 0.05em;
 }
-.home-bg .side-links {
   display: flex;
   flex-direction: row;
   z-index: 0; /* Ensure background is behind content */
@@ -71,14 +70,16 @@ body.home-bg::before {
   width: 100%;
   gap: 1.2em;
 }
-@media (max-width: 900px) {
-  position: fixed !important; /* Fixed position for overlay */
-  top: 0 !important; /* Align to top */
-  left: 0 !important; /* Align to left */
-  width: 100vw !important; /* Full viewport width */
-  height: 100vh !important; /* Full viewport height */
-  z-index: 1 !important; /* Above background but below content */
-  pointer-events: none !important; /* Allow clicks to pass through */
+.home-bg .side-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2em;
+  width: 100%;
+  z-index: 2;
+  margin-top: 0;
+}
   .side-links {
     gap: 0.5em;
   }
@@ -89,10 +90,17 @@ body.home-bg::before {
     padding: 0.2em 0.5em;
     margin: 0 0.2em;
   }
-  .side-links {
-    gap: 0.5em;
+    .home-bg .side-links {
+      flex-direction: column;
+      gap: 0.5em;
+      align-items: center;
+    }
+    .home-bg .side-links a {
+      font-size: 1.1em;
+      padding: 0.2em 0.5em;
+      margin: 0.2em 0;
+    }
   }
-}
 @media (max-width: 900px) {
   .side-links a {
     font-size: 1em;
@@ -124,11 +132,11 @@ body.home-bg::before {
   display: block;
   background: transparent;
 }
-
-/* Contact window with background image */
-.contact-window {
-  max-width: 500px;
-  margin: 2em auto 0 auto;
+  pointer-events: auto; /* Allow clicks */
+  background: none;
+  background-size: cover;
+  filter: none;
+  opacity: 1;
   padding: 2.5em 2em 2em 2em;
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.13);
