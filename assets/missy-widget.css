@@ -1,0 +1,57 @@
+/* Missy Widget Styles */
+.missy-corner-widget, #missyCornerWidget {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: auto;
+  background: none;
+}
+.missy-corner-img, #missyCornerImg {
+  width: 120px;
+  height: auto;
+  filter: grayscale(1) brightness(0.98);
+  transition: filter 0.3s;
+  cursor: pointer;
+  z-index: 10005;
+  pointer-events: auto;
+}
+.missy-corner-img.color, #missyCornerImg.color {
+  filter: none;
+}
+.missy-corner-bubble, #missyCornerBubble {
+  position: fixed;
+  z-index: 10000;
+  pointer-events: none;
+  display: block;
+  left: auto;
+  right: 140px;
+  top: calc(100vh - 120px - 60px);
+  max-width: 220px;
+  width: auto;
+  height: auto;
+  opacity: 1;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+.missy-corner-bubble.bubble-hidden, #missyCornerBubble.bubble-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.missy-corner-bubble.show, #missyCornerBubble.show {
+  opacity: 1;
+  visibility: visible;
+}
+@media (max-width: 600px) {
+  .missy-corner-img, #missyCornerImg {
+    width: 80px;
+  }
+  .missy-corner-bubble, #missyCornerBubble {
+    right: 90px;
+    max-width: 140px;
+    top: calc(100vh - 80px - 40px);
+  }
+}

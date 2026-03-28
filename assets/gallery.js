@@ -46,8 +46,31 @@ function createGalleryItem(imgNum) {
   img.addEventListener('click', () => {
     markVisited(imgNum);
     img.classList.add('visited');
-    // Optionally: open modal here
+    // Open modal popup
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalCaption = document.getElementById('modal-caption');
+    modal.style.display = 'flex';
+    modalImg.src = img.src;
+    // Set caption (use loaded caption text if available)
+    modalCaption.textContent = caption.textContent || img.alt;
   });
+// Modal close logic
+const modal = document.getElementById('image-modal');
+const modalClose = document.getElementById('modal-close');
+if (modal && modalClose) {
+  modalClose.onclick = function() {
+    modal.style.display = 'none';
+    document.getElementById('modal-img').src = '';
+  };
+  // Also close modal when clicking outside the image
+  modal.onclick = function(e) {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      document.getElementById('modal-img').src = '';
+    }
+  };
+}
 
   const caption = document.createElement('div');
   caption.className = 'caption';

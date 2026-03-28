@@ -24,16 +24,22 @@
         <a href="gallery.html">Gallery</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
+        <a href="blank-canvas.html">Draw</a>
       </nav>
       <div class="vertical-heading-flex">
         <span>Gallery</span>
       </div>
       <div class="sidebar-bottom">
-        <button id="backToTopBtn" title="Back to Top"></button>
         <div class="missy-spacer"></div>
         <div id="missy-widget-placeholder"></div>
       </div>
     </aside>
+  </div>
+  <!-- Modal for image popup -->
+  <div id="image-modal" class="modal" style="display:none;position:fixed;z-index:1000;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.8);align-items:center;justify-content:center;">
+    <span id="modal-close" style="position:absolute;top:24px;right:40px;font-size:2.5em;color:#fff;cursor:pointer;font-family:sans-serif;z-index:1010;">&times;</span>
+    <img id="modal-img" src="" alt="Artwork" style="max-width:90vw;max-height:80vh;box-shadow:0 4px 32px #000;border-radius:12px;">
+    <div id="modal-caption" style="color:#fff;text-align:center;margin-top:18px;font-size:1.2em;"></div>
   </div>
   <script src="assets/gallery.js"></script>
   <script src="assets/color-reveal.js"></script>

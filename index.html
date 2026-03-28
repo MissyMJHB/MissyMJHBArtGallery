@@ -7,12 +7,14 @@
   <link rel="stylesheet" href="assets/style.css">
   <link rel="icon" href="assets/MissyCutOut.png">
 </head>
-<body class="home-bg">
-  <!-- Magic background effect: color wave reveal -->
-  <div id="magic-bg-container">
-    <div class="bg-layer home-cursed-bw"></div>
-    <div class="bg-layer home-magic-color"></div>
-  </div>
+
+<body class="home-bg" style="background:#fff;">
+    <!--
+      NOTE: For the color reveal effect to work, you MUST run this page from a local server (not file://). Use VS Code Live Server, Python http.server, or similar.
+      Browsers block mask images on local files for security reasons.
+    -->
+  <canvas id="reveal-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:auto;"></canvas>
+
 
   <header>
     <h1>Missy Art Gallery</h1>
@@ -21,10 +23,101 @@
       <a href="gallery.html">Gallery</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
+      <a href="blank-canvas.html">Draw</a>
     </nav>
   </header>
 
-  <script src="assets/home-anim.js"></script>
-  <script src="assets/color-reveal.js"></script>
+  <script>
+  // Robust canvas-based permanent color reveal effect
+  (function() {
+    const canvas = document.getElementById('reveal-canvas');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    let w = window.innerWidth, h = window.innerHeight;
+    let mask = null;
+    let colorImg = new window.Image();
+    let bwImg = new window.Image();
+    colorImg.src = 'assets/home-bg.jpg';
+    bwImg.src = 'assets/home-bg.jpg';
+    let colorLoaded = false, bwLoaded = false;
+
+    function setCanvasSize() {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w;
+      canvas.height = h;
+      if (mask) {
+        // Resize mask, keep old data if possible
+        let old = mask;
+        mask = document.createElement('canvas');
+        mask.width = w;
+        mask.height = h;
+        let mctx = mask.getContext('2d', { willReadFrequently: true });
+        mctx.fillStyle = 'black';
+        mctx.fillRect(0,0,w,h);
+        mctx.drawImage(old, 0, 0);
+      } else {
+        mask = document.createElement('canvas');
+        mask.width = w;
+        mask.height = h;
+        let mctx = mask.getContext('2d', { willReadFrequently: true });
+        mctx.fillStyle = 'black';
+        mctx.fillRect(0,0,w,h);
+      }
+      redraw();
+    }
+
+    function redraw() {
+      if (!colorLoaded || !bwLoaded) return;
+      // Draw grayscale base
+      ctx.clearRect(0,0,w,h);
+      ctx.save();
+      ctx.filter = 'grayscale(1) contrast(1.1)';
+      ctx.drawImage(bwImg, 0, 0, w, h);
+      ctx.restore();
+      // Draw color image with mask as alpha
+      let maskCtx = mask.getContext('2d', { willReadFrequently: true });
+      let maskData = maskCtx.getImageData(0,0,w,h);
+      let colorData = ctx.getImageData(0,0,w,h);
+      let tempCanvas = document.createElement('canvas');
+      tempCanvas.width = w;
+      tempCanvas.height = h;
+      let tempCtx = tempCanvas.getContext('2d', { willReadFrequently: true });
+      tempCtx.drawImage(colorImg, 0, 0, w, h);
+      let colorImgData = tempCtx.getImageData(0,0,w,h);
+      for (let i=0; i<maskData.data.length; i+=4) {
+        let alpha = maskData.data[i]/255;
+        colorData.data[i] = colorImgData.data[i]*alpha + colorData.data[i]*(1-alpha);
+        colorData.data[i+1] = colorImgData.data[i+1]*alpha + colorData.data[i+1]*(1-alpha);
+        colorData.data[i+2] = colorImgData.data[i+2]*alpha + colorData.data[i+2]*(1-alpha);
+        // colorData.data[i+3] = 255; // keep opaque
+      }
+      ctx.putImageData(colorData,0,0);
+    }
+
+    function revealAt(x, y) {
+      let mctx = mask.getContext('2d');
+      mctx.save();
+      mctx.beginPath();
+      mctx.arc(x, y, 30, 0, 2*Math.PI);
+      mctx.closePath();
+      mctx.fillStyle = '#fff';
+      mctx.fill();
+      mctx.restore();
+      redraw();
+    }
+
+    window.addEventListener('resize', setCanvasSize);
+    setCanvasSize();
+
+    colorImg.onload = function() { colorLoaded = true; redraw(); };
+    bwImg.onload = function() { bwLoaded = true; redraw(); };
+
+    canvas.addEventListener('mousemove', function(e) {
+      revealAt(e.clientX, e.clientY);
+    });
+  })();
+  </script>
+
+  <script src="assets/html2canvas.min.js"></script>
 </body>
 </html>

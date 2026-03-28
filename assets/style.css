@@ -1,3 +1,121 @@
+@media (max-width: 700px) {
+  .contact-img-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 98vw;
+    margin: 0 auto;
+  }
+  .contact-bubbles-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    gap: 0.5em;
+    margin-bottom: 0.7em;
+  }
+  .contact-bubbles-vertical .bubble {
+    position: static;
+    width: 95%;
+    min-width: 0;
+    max-width: 600px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+  .contact-art-img {
+    max-width: 98vw;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 700px) {
+  .contact-img-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+  }
+  .contact-bubbles-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0.5em;
+    margin-bottom: 0.7em;
+  }
+  .contact-bubbles-vertical .bubble {
+    position: static;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+  }
+  .contact-art-img {
+    max-width: 98vw;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+@media (max-width: 700px) {
+  .contact-img-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+  }
+  .contact-art-img {
+    width: 100%;
+    max-width: 98vw;
+    height: auto;
+    display: block;
+  }
+  .bubble {
+    position: static;
+    margin: 0.3em 0.5em;
+    min-width: 120px;
+    max-width: 98vw;
+    width: auto;
+    display: inline-flex;
+    justify-content: flex-start;
+  }
+  .contact-bubbles-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    width: 100%;
+    margin-bottom: 0.4em;
+  }
+  .contact-bubbles-row .bubble {
+    flex: 1 1 140px;
+    min-width: 120px;
+    max-width: 98vw;
+    margin: 0.2em 0.1em;
+  }
+  @media (max-width: 500px) {
+    .contact-bubbles-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.5em;
+    }
+    .contact-bubbles-row .bubble {
+      flex: none;
+      min-width: 0;
+      max-width: 100%;
+      width: 100%;
+      margin: 0.1em 0;
+    }
+  }
+}
 /* Vertical animated color stripe overlay for all pages */
 
   /* Animated color wave mask for color background layer */
@@ -44,16 +162,16 @@
 }
 /* Contact page image and yellow text bubbles overlay */
 .contact-image-bubbles {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto 1fr auto;
-  align-items: center;
-  justify-items: center;
-  min-height: 420px;
   width: 100%;
-  margin: 0 auto;
   max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contact-img-wrap {
+  position: relative;
+  display: inline-block;
 }
 .contact-art-img {
   width: 100%;
@@ -63,59 +181,59 @@
   display: block;
 }
 .bubble {
+  position: absolute;
   background: #ffe066;
   color: #222;
   border-radius: 2em;
   padding: 0.7em 1.4em;
   font-size: 1.1em;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
   border: 2px solid #fffbe6;
   font-family: 'Segoe UI', Arial, sans-serif;
   z-index: 2;
-  transition: transform 0.2s;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  min-width: 180px;
+  max-width: 320px;
+  pointer-events: auto;
+}
+.bubble strong {
+  font-weight: 700;
+  margin-right: 0.3em;
 }
 .bubble a { color: #222; text-decoration: underline; }
-/* Improved bubble positions for clarity */
-/* Pixel-based for more consistent overlay */
-.bubble-name { top: 24px; left: 32px; }
-.bubble-phone { top: 24px; right: 32px; }
-.bubble-email { bottom: 32px; left: 32px; }
-.bubble-fb { bottom: 32px; right: 32px; }
+.bubble-name {
+  top: -24px;
+  left: -24px;
+}
+.bubble-phone {
+  top: -24px;
+  right: -24px;
+}
+.bubble-email {
+  bottom: -24px;
+  left: -24px;
+}
+.bubble-fb {
+  bottom: -24px;
+  right: -24px;
+}
 @media (max-width: 700px) {
   .contact-image-bubbles {
     max-width: 98vw;
-    min-height: 320px;
   }
   .contact-art-img { max-width: 98vw; }
-  .bubble { font-size: 0.95em; padding: 0.5em 1em; }
-  .bubble-name { top: 8px; left: 8px; }
-  .bubble-phone { top: 8px; right: 8px; }
-  .bubble-email { bottom: 8px; left: 8px; }
-  .bubble-fb { bottom: 8px; right: 8px; }
-  .bubble-name {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-    justify-self: start;
-    align-self: start;
+  .bubble {
+    font-size: 0.95em;
+    padding: 0.5em 1em;
+    min-width: 120px;
+    max-width: 98vw;
   }
-  .bubble-phone {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-    justify-self: end;
-    align-self: start;
-  }
-  .bubble-email {
-    grid-column: 1 / 2;
-    grid-row: 3 / 4;
-    justify-self: start;
-    align-self: end;
-  }
-  .bubble-fb {
-    grid-column: 2 / 3;
-    grid-row: 3 / 4;
-    justify-self: end;
-    align-self: end;
-  }
+  .bubble-name { top: 4px; left: 4px; right: auto; }
+  .bubble-phone { top: 4px; right: 4px; left: auto; }
+  .bubble-email { bottom: 4px; left: 4px; right: auto; }
+  .bubble-fb { bottom: 4px; right: 4px; left: auto; }
 }
 .bg-layer {
   position: absolute;
