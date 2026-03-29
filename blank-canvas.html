@@ -84,6 +84,8 @@
         justify-content: center;
       }
       #draw-canvas {
+        touch-action: pan-y;
+        overscroll-behavior: contain;
         position: fixed;
         top: 0;
         left: 0;
@@ -95,15 +97,19 @@
   </style>
 </head>
 <body class="blank-bg">
-  <div class="sidebar">
-    <h1>Missy Art Gallery</h1>
-    <a href="index.html">Home</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-    <a href="blank-canvas.html">Draw</a>
-  </div>
+  <aside class="sidebar-nav">
+    <nav class="side-links">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="vertical-heading-flex">
+      <span>Draw</span>
+    </div>
+  </aside>
   <div id="draw-controls">
+    <a href="index.html" id="home-btn" class="draw-home-btn">Home</a>
     <button id="erase-btn">Erase</button>
     <input type="color" id="color-picker" value="#000000" title="Pick a color">
     <label for="tool-select" class="tool-label">Tool:</label>
@@ -111,35 +117,19 @@
       <option value="pen">Pen</option>
       <option value="marker">Marker</option>
       <option value="crayon">Crayon</option>
-    </select>
-  </div>
-    <style>
-      .tool-label {
-        color: #fff;
-        font-size: 1em;
-      }
-      #color-picker {
-        margin: 0 8px;
-        border-radius: 6px;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.10);
-        width: 32px;
-        height: 32px;
-        border: none;
-        outline: none;
+    body.blank-bg {
+      touch-action: pan-y;
+      overscroll-behavior: contain;
+      background: #fff !important;
+      min-height: 100vh;
+      overflow: hidden;
+      background-image: none !important;
+    }
         cursor: pointer;
       }
-      #draw-controls {
-        position:fixed;
-        top:16px;
-        left:200px;
-        z-index:30;
-        display:flex;
-        gap:10px;
-        align-items:center;
-        background:rgba(34,34,34,0.95);
-        padding:8px 12px;
-        border-radius:8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      .draw-home-btn:hover {
+        background: #ff0055;
+        color: #fff;
       }
       #draw-canvas {
         position:fixed;
@@ -151,6 +141,7 @@
         pointer-events:auto;
         background:#fff;
         display:block;
+        box-shadow: none !important;
       }
       @media (max-width: 600px) {
         .sidebar {
@@ -186,18 +177,43 @@
           box-shadow: 0 -2px 8px rgba(0,0,0,0.12);
           padding: 0;
         }
+        .draw-home-btn {
+          margin-right: 8px;
+        }
         #draw-canvas {
           position: fixed;
           top: 0;
           left: 0;
           width: 100vw;
-          height: calc(100vh - 60px - 56px); /* sidebar + controls */
+          height: 100vh;
           z-index: 10;
+          background: #fff !important;
+          box-shadow: none !important;
+        }
+        body.blank-bg {
+          background: #fff !important;
+          background-image: none !important;
         }
       }
     </style>
     <canvas id="draw-canvas"></canvas>
   <script src="assets/html2canvas.min.js"></script>
+  <script>
+    // Prevent accidental swipe navigation on mobile
+    const drawCanvas = document.getElementById('draw-canvas');
+    if (drawCanvas) {
+      drawCanvas.addEventListener('touchmove', function(e) {
+        if (e.touches.length === 1) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+    }
+    document.body.addEventListener('touchmove', function(e) {
+      if (e.target === drawCanvas) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+  </script>
   <script>
     // Ensure canvas matches CSS size for drawing
     function resizeCanvas() {

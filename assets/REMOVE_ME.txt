@@ -1,0 +1,1 @@
+missy-widget.css and MissyCutOut.png are no longer needed and can be deleted if not referenced elsewhere.
