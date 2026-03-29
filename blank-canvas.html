@@ -1,271 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="blank-bg">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Missy Art Gallery - Blank Canvas</title>
-  <link rel="stylesheet" href="assets/style.css">
-  <link rel="icon" href="assets/MissyCutOut.png">
-  <style>
-    html, body {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missy Art Gallery - Blank Canvas</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="icon" href="assets/MissyCutOut.png">
+</head>
+<body class="blank-bg">
+    <div id="draw-controls">
+        <a href="index.html" id="home-btn" class="draw-home-btn">Home</a>
+        <button id="erase-btn">Erase</button>
+        <input type="color" id="color-picker" value="#000000" title="Pick a color">
+        <label for="tool-select" class="tool-label">Tool:</label>
+        <select id="tool-select" title="Drawing tool">
+            <option value="pen">Pen</option>
+            <option value="marker">Marker</option>
+            <option value="crayon">Crayon</option>
+        </select>
+    </div>
+    <canvas id="draw-canvas"></canvas>
+    <script src="assets/html2canvas.min.js"></script>
+    <script>
+        // Prevent accidental swipe navigation on mobile
+        const drawCanvas = document.getElementById('draw-canvas');
+        if (drawCanvas) {
+            drawCanvas.addEventListener('touchmove', function (e) {
+                if (e.touches.length === 1) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        }
+        document.body.addEventListener('touchmove', function (e) {
+            if (e.target === drawCanvas) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+    <script>
+        // Ensure canvas matches CSS size for drawing
+        function resizeCanvas() {
+            const canvas = document.getElementById('draw-canvas');
+            if (!canvas) return;
+            // Get computed size
+            const rect = canvas.getBoundingClientRect();
+            // Only set if changed to avoid flicker
+            if (canvas.width !== Math.round(rect.width) || canvas.height !== Math.round(rect.height)) {
+                canvas.width = Math.round(rect.width);
+                canvas.height = Math.round(rect.height);
+            }
+        }
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('DOMContentLoaded', resizeCanvas);
+    </script>
+    <script src="assets/drawing-canvas.js"></script>
+    <script>
+        // Color wave erase animation (only affects drawing area)
+        document.getElementById('erase-btn').onclick = function () {
+            const canvas = document.getElementById('draw-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d', { willReadFrequently: true });
+            const width = canvas.width;
+            const height = canvas.height;
+            let waveX = -200;
+            function animate() {
+                ctx.save();
+                ctx.globalAlpha = 1;
+                ctx.fillStyle = '#fff';
+                ctx.beginPath();
+                ctx.moveTo(waveX, 0);
+                ctx.lineTo(waveX + 200, 0);
+                ctx.lineTo(waveX + 160, height);
+                ctx.lineTo(waveX - 40, height);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+                waveX += 32;
+                if (waveX - 40 < width) {
+                    requestAnimationFrame(animate);
+                } else {
+                    ctx.save();
+                    ctx.globalAlpha = 1;
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(0, 0, width, height);
+                    ctx.restore();
+                }
+            }
+            animate();
+        }
+    </script>
+    <style>
+    body.blank-bg, html {
+      overscroll-behavior: none;
+      touch-action: none;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-    body.blank-bg {
       background: #fff;
       min-height: 100vh;
       overflow: hidden;
     }
-    .sidebar {
+    #draw-controls {
       position: fixed;
-      left: 0;
       top: 0;
-      width: 180px;
-      height: 100vh;
+      left: 0;
+      width: 100vw;
+      z-index: 10;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: #f8f8f8;
+      padding: 8px 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .draw-home-btn {
+      color: #222;
+      background: #eee;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 0.4em 1em;
+      text-decoration: none;
+      margin-right: 0.5em;
+      transition: background 0.2s, color 0.2s;
+    }
+    .draw-home-btn:hover {
       background: #222;
       color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      z-index: 20;
-      padding-top: 32px;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.08);
     }
-    .sidebar h1 {
-      font-size: 1.5em;
-      margin: 0 0 2em 0;
-      letter-spacing: 1px;
-      text-align: center;
-    }
-    .sidebar a {
-      color: #fff;
-      text-decoration: none;
-      background: #444;
-      padding: 0.7em 1.2em;
-      border-radius: 6px;
-      margin-bottom: 1em;
-      font-size: 1em;
-      transition: background 0.2s;
+    #draw-canvas {
+      position: absolute;
+      top: 48px;
+      left: 0;
+      width: 100vw;
+      height: calc(100vh - 48px);
+      background: #fff;
+      touch-action: none;
       display: block;
-      text-align: center;
     }
-    .sidebar a:hover {
-      background: #ff0055;
-    }
-    #draw-controls {
-      position:fixed;top:16px;left:200px;z-index:30;display:flex;gap:10px;align-items:center;background:rgba(34,34,34,0.95);padding:8px 12px;border-radius:8px;
-    }
-    @media (max-width: 600px) {
-      .sidebar {
-        width: 100vw;
-        height: 60px;
-        flex-direction: row;
-        padding-top: 0;
-        left: 0;
-        top: auto;
-        bottom: 0;
-        z-index: 40;
-        align-items: center;
-        justify-content: flex-start;
-      }
-      .sidebar h1 { font-size: 1.1em; margin: 0 1em 0 0; }
-      .sidebar a { margin: 0 0.5em 0 0; padding: 0.5em 1em; }
-      #draw-controls {
-        position: fixed;
-        top: 8px;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        width: calc(100vw - 16px);
-        max-width: 600px;
-        z-index: 35;
-        justify-content: center;
-      }
-      #draw-canvas {
-        touch-action: pan-y;
-        overscroll-behavior: contain;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: calc(100vh - 60px);
-        z-index: 10;
-      }
-    }
-  </style>
-</head>
-<body class="blank-bg">
-  <aside class="sidebar-nav">
-    <nav class="side-links">
-      <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <div class="vertical-heading-flex">
-      <span>Draw</span>
-    </div>
-  </aside>
-  <div id="draw-controls">
-    <a href="index.html" id="home-btn" class="draw-home-btn">Home</a>
-    <button id="erase-btn">Erase</button>
-    <input type="color" id="color-picker" value="#000000" title="Pick a color">
-    <label for="tool-select" class="tool-label">Tool:</label>
-    <select id="tool-select" title="Drawing tool">
-      <option value="pen">Pen</option>
-      <option value="marker">Marker</option>
-      <option value="crayon">Crayon</option>
-    body.blank-bg {
-      touch-action: pan-y;
-      overscroll-behavior: contain;
-      background: #fff !important;
-      min-height: 100vh;
-      overflow: hidden;
-      background-image: none !important;
-    }
-        cursor: pointer;
-      }
-      .draw-home-btn:hover {
-        background: #ff0055;
-        color: #fff;
-      }
-      #draw-canvas {
-        position:fixed;
-        top:0;
-        left:180px;
-        width:calc(100vw - 180px);
-        height:100vh;
-        z-index:10;
-        pointer-events:auto;
-        background:#fff;
-        display:block;
-        box-shadow: none !important;
-      }
-      @media (max-width: 600px) {
-        .sidebar {
-          width: 100vw;
-          height: 60px;
-          flex-direction: row;
-          padding-top: 0;
-          left: 0;
-          top: auto;
-          bottom: 0;
-          z-index: 40;
-          align-items: center;
-          justify-content: flex-start;
-          box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
-        }
-        .sidebar h1 { font-size: 1.1em; margin: 0 1em 0 0; }
-        .sidebar a { margin: 0 0.5em 0 0; padding: 0.5em 1em; }
-        #draw-controls {
-          position: fixed;
-          left: 0;
-          right: 0;
-          bottom: 60px; /* above sidebar */
-          height: 56px;
-          margin: 0 auto;
-          width: 100vw;
-          max-width: 600px;
-          z-index: 41;
-          justify-content: center;
-          display: flex;
-          align-items: center;
-          background: rgba(34,34,34,0.95);
-          border-radius: 0;
-          box-shadow: 0 -2px 8px rgba(0,0,0,0.12);
-          padding: 0;
-        }
-        .draw-home-btn {
-          margin-right: 8px;
-        }
-        #draw-canvas {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          z-index: 10;
-          background: #fff !important;
-          box-shadow: none !important;
-        }
-        body.blank-bg {
-          background: #fff !important;
-          background-image: none !important;
-        }
-      }
     </style>
-    <canvas id="draw-canvas"></canvas>
-  <script src="assets/html2canvas.min.js"></script>
-  <script>
-    // Prevent accidental swipe navigation on mobile
-    const drawCanvas = document.getElementById('draw-canvas');
-    if (drawCanvas) {
-      drawCanvas.addEventListener('touchmove', function(e) {
-        if (e.touches.length === 1) {
-          e.preventDefault();
-        }
-      }, { passive: false });
-    }
-    document.body.addEventListener('touchmove', function(e) {
-      if (e.target === drawCanvas) {
-        e.preventDefault();
-      }
-    }, { passive: false });
-  </script>
-  <script>
-    // Ensure canvas matches CSS size for drawing
-    function resizeCanvas() {
-      const canvas = document.getElementById('draw-canvas');
-      if (!canvas) return;
-      // Get computed size
-      const rect = canvas.getBoundingClientRect();
-      // Only set if changed to avoid flicker
-      if (canvas.width !== Math.round(rect.width) || canvas.height !== Math.round(rect.height)) {
-        canvas.width = Math.round(rect.width);
-        canvas.height = Math.round(rect.height);
-      }
-    }
-    window.addEventListener('resize', resizeCanvas);
-    window.addEventListener('DOMContentLoaded', resizeCanvas);
-  </script>
-  <script src="assets/drawing-canvas.js"></script>
-  <script>
-  // Color wave erase animation (only affects drawing area)
-  document.getElementById('erase-btn').onclick = function() {
-    const canvas = document.getElementById('draw-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
-    const width = canvas.width;
-    const height = canvas.height;
-    let waveX = -200;
-    function animate() {
-      ctx.save();
-      ctx.globalAlpha = 1;
-      ctx.fillStyle = '#fff';
-      ctx.beginPath();
-      ctx.moveTo(waveX, 0);
-      ctx.lineTo(waveX+200, 0);
-      ctx.lineTo(waveX+160, height);
-      ctx.lineTo(waveX-40, height);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-      waveX += 32;
-      if (waveX-40 < width) {
-        requestAnimationFrame(animate);
-      } else {
-        ctx.save();
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(0,0,width,height);
-        ctx.restore();
-      }
-    }
-    animate();
-  }
-  </script>
-    <!-- Removed duplicate erase button and scripts -->
 </body>
 </html>

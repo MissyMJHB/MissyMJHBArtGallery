@@ -17,14 +17,13 @@
   <canvas id="reveal-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:auto;"></canvas>
 
 
-  <header>
+  <header class="home-header">
     <h1>Missy Art Gallery</h1>
-    <nav class="side-links">
+    <nav class="home-nav">
       <a href="gallery.html">Gallery</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
       <a href="blank-canvas.html">Draw</a>
-        <a href="blank-canvas.html">Draw</a>
     </nav>
   </header>
 
@@ -73,7 +72,8 @@
       ctx.clearRect(0,0,w,h);
       ctx.save();
       ctx.filter = 'grayscale(1) contrast(1.1)';
-      ctx.drawImage(bwImg, 0, 0, w, h);
+      // Draw grayscale image with 'cover' effect
+      drawCover(ctx, bwImg, w, h);
       ctx.restore();
       // Draw color image with mask as alpha
       let maskCtx = mask.getContext('2d', { willReadFrequently: true });
@@ -83,8 +83,28 @@
       tempCanvas.width = w;
       tempCanvas.height = h;
       let tempCtx = tempCanvas.getContext('2d', { willReadFrequently: true });
-      tempCtx.drawImage(colorImg, 0, 0, w, h);
+      drawCover(tempCtx, colorImg, w, h);
       let colorImgData = tempCtx.getImageData(0,0,w,h);
+          // Helper: draw image with 'cover' effect (like CSS background-size: cover)
+          function drawCover(ctx, img, w, h) {
+            let imgAspect = img.width / img.height;
+            let canvasAspect = w / h;
+            let drawWidth, drawHeight, offsetX, offsetY;
+            if (imgAspect > canvasAspect) {
+              // Image is wider than canvas
+              drawHeight = h;
+              drawWidth = h * imgAspect;
+              offsetX = (w - drawWidth) / 2;
+              offsetY = 0;
+            } else {
+              // Canvas is wider than image
+              drawWidth = w;
+              drawHeight = w / imgAspect;
+              offsetX = 0;
+              offsetY = (h - drawHeight) / 2;
+            }
+            ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+          }
       for (let i=0; i<maskData.data.length; i+=4) {
         let alpha = maskData.data[i]/255;
         colorData.data[i] = colorImgData.data[i]*alpha + colorData.data[i]*(1-alpha);
@@ -115,6 +135,27 @@
 
     canvas.addEventListener('mousemove', function(e) {
       revealAt(e.clientX, e.clientY);
+    });
+    // Touch support for color reveal
+    let touching = false;
+    canvas.addEventListener('touchstart', function(e) {
+      touching = true;
+      for (let i = 0; i < e.touches.length; i++) {
+        let touch = e.touches[i];
+        revealAt(touch.clientX, touch.clientY);
+      }
+      e.preventDefault();
+    }, { passive: false });
+    canvas.addEventListener('touchmove', function(e) {
+      if (!touching) return;
+      for (let i = 0; i < e.touches.length; i++) {
+        let touch = e.touches[i];
+        revealAt(touch.clientX, touch.clientY);
+      }
+      e.preventDefault();
+    }, { passive: false });
+    canvas.addEventListener('touchend', function(e) {
+      touching = false;
     });
   })();
   </script>
