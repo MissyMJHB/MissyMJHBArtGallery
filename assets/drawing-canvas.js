@@ -36,6 +36,7 @@ window.addEventListener('DOMContentLoaded', function () {
     toolSelect.addEventListener('change', e => {
       tool = e.target.value;
     });
+  }
 
   function getLineWidth() {
     if (tool === 'pen') return 2;
@@ -43,9 +44,9 @@ window.addEventListener('DOMContentLoaded', function () {
     return 2;
   }
   function getAlpha() {
-  if (tool === 'pen') return 1.0;
-  if (tool === 'marker') return 0.3;
-  if (tool === 'crayon') return 0.7;
+    if (tool === 'pen') return 1.0;
+    if (tool === 'marker') return 0.3;
+    if (tool === 'crayon') return 0.7;
     return 1.0;
   }
   function getCrayonPattern() {
@@ -62,21 +63,21 @@ window.addEventListener('DOMContentLoaded', function () {
     lastY = e.offsetY;
   });
   canvas.addEventListener('mousemove', e => {
-  if (!drawing) return;
-  ctx.save();
-  ctx.globalAlpha = getAlpha();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = getLineWidth();
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  if (tool === 'crayon') getCrayonPattern();
-  else clearPattern();
-  ctx.beginPath();
-  ctx.moveTo(lastX, lastY);
-  ctx.lineTo(e.offsetX, e.offsetY);
-  ctx.stroke();
-  ctx.restore();
-  lastX = e.offsetX;
+    if (!drawing) return;
+    ctx.save();
+    ctx.globalAlpha = getAlpha();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = getLineWidth();
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    if (tool === 'crayon') getCrayonPattern();
+    else clearPattern();
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    ctx.restore();
+    lastX = e.offsetX;
     lastY = e.offsetY;
   });
   canvas.addEventListener('mouseup', () => { drawing = false; });
@@ -86,33 +87,33 @@ window.addEventListener('DOMContentLoaded', function () {
   canvas.addEventListener('touchstart', e => {
     if (e.touches.length > 0) {
       let rect = canvas.getBoundingClientRect();
-  let x = e.touches[0].clientX - rect.left;
-  drawing = true;
-  lastX = x;
+      let x = e.touches[0].clientX - rect.left;
+      drawing = true;
+      lastX = x;
       lastY = e.touches[0].clientY - rect.top;
     }
   });
   canvas.addEventListener('touchmove', e => {
     if (!drawing || e.touches.length === 0) return;
     let rect = canvas.getBoundingClientRect();
-  let x = e.touches[0].clientX - rect.left;
-  let y = e.touches[0].clientY - rect.top;
-  ctx.save();
-  ctx.globalAlpha = getAlpha();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = getLineWidth();
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  if (tool === 'crayon') getCrayonPattern();
-  else clearPattern();
-  ctx.beginPath();
-  ctx.moveTo(lastX, lastY);
-  ctx.lineTo(x, y);
-  ctx.stroke();
-  ctx.restore();
-  lastX = x;
-  lastY = y;
-  e.preventDefault();
+    let x = e.touches[0].clientX - rect.left;
+    let y = e.touches[0].clientY - rect.top;
+    ctx.save();
+    ctx.globalAlpha = getAlpha();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = getLineWidth();
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    if (tool === 'crayon') getCrayonPattern();
+    else clearPattern();
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.restore();
+    lastX = x;
+    lastY = y;
+    e.preventDefault();
   }, {passive: false});
   canvas.addEventListener('touchend', () => { drawing = false; });
   canvas.addEventListener('touchcancel', () => { drawing = false; });
