@@ -91,6 +91,7 @@ body.scrollable::-webkit-scrollbar {
     z-index: 10;
     background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
     pointer-events: none; /* Let clicks pass through to the canvas */
+    z-index: 1000; /* Extremely high z-index to stay on top */
 }
 
 .home-header h1 {
@@ -143,25 +144,58 @@ body.scrollable::-webkit-scrollbar {
 
 .main-content {
   grid-column: 1;
-  padding: 2em;
+  padding: 1.5em;
+  padding-right: 110px; /* Leave space for the fixed sidebar */
 }
 
 .sidebar {
-  grid-column: 2;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 110px;
+  height: 100vh;
   background-color: #000;
   border-left: 1px solid #444;
-  writing-mode: vertical-rl;
   text-align: center;
-  transform: rotate(180deg);
-  padding: 2em 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 2em 0; /* Consistent padding at top and bottom */
+  box-sizing: border-box;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-bottom: 3em; /* Space between links and the title below */
+}
+
+.sidebar-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1em;
+  font-family: sans-serif;
+  transition: color 0.2s;
+  padding: 5px 0;
+}
+
+.sidebar-nav a:hover {
+  color: #ffe066;
 }
 
 .sidebar h1 {
-  margin: 0;
-  font-size: 2.5em;
+  margin: 0; /* Positioned right after the nav */
+  font-size: 2.2em;
   font-family: 'Constantia', serif;
   letter-spacing: 5px;
   text-transform: uppercase;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  pointer-events: none;
+  flex-grow: 1; /* Allows it to take up the remaining space */
+  display: flex;
+  justify-content: center;
 }
 
 .main-nav {
@@ -463,78 +497,92 @@ input[type="color"] {
     border-radius: 10px;
     max-width: 800px;
     margin: 0 auto;
-    background-color: rgba(0, 0, 0, 0.7); /* Dark background for readability */
+    background-color: rgba(0, 0, 0, 0.85); /* More opaque for better readability */
+    color: #ffe066; /* Gold text for high contrast */
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
 .contact-container h2 {
     color: #ffe066;
     text-align: center;
-    font-size: 2em;
-    margin-bottom: 1em;
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+    margin-top: 0;
 }
 
 .form-group {
-    margin-bottom: 1.5em;
+    margin-bottom: 0.8em;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5em;
-    color: #ccc;
+    margin-bottom: 0.2em;
+    color: #ffe066; /* Matching gold for high contrast */
+    font-size: 0.9em;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 0.8em;
+    padding: 0.6em;
     border: 1px solid #555;
     background-color: #222;
     color: #fff;
     border-radius: 5px;
-    font-size: 1em;
+    font-size: 0.9em;
     box-sizing: border-box;
 }
 
 .submit-btn {
     display: block;
     width: 100%;
-    padding: 1em;
+    padding: 0.8em;
     background-color: #ffe066;
     color: #000;
     border: none;
     border-radius: 5px;
-    font-size: 1.2em;
+    font-size: 1.1em;
     cursor: pointer;
     transition: background-color 0.2s;
 }
 
-.submit-btn:hover {
-    background-color: #fff;
-}
-
-#form-status {
-    margin-top: 1.5em;
+.email-note {
+    display: block;
     text-align: center;
-    font-size: 1.1em;
+    font-size: 0.75em;
+    color: #888;
+    margin-top: 5px;
 }
 
 .contact-details {
-    margin-top: 3em;
-    padding-top: 2em;
+    margin-top: 1.5em;
+    padding-top: 1em;
     border-top: 1px solid #444;
     text-align: center;
-    color: #ccc;
+    color: #ffe066; /* Highly readable gold */
 }
 
 .contact-details h3 {
     color: #ffe066;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
+    font-size: 1.2em;
 }
 
 .contact-details p {
-    margin: 0.5em 0;
-    font-size: 1.1em;
+    margin: 0.2em 0;
+    font-size: 1em;
+}
+
+/* --- Visit Counter Style --- */
+#visit-counter {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8em;
+    color: #ffe066; /* Gold/Yellow as requested */
+    opacity: 0.7;
+    z-index: 1000;
 }
 
 .contact-details a {

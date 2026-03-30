@@ -114,4 +114,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     canvas.addEventListener('mousemove', handleMove);
     canvas.addEventListener('touchmove', handleMove, { passive: false });
+
+    // --- Visit Counter Logic ---
+    function updateCounter() {
+        const countSpan = document.getElementById('count');
+        if (!countSpan) return;
+
+        // Use a simple localStorage counter for now
+        // This tracks the individual user's visits to keep it elegant and fast
+        let visits = localStorage.getItem('visitCount') || 0;
+        visits = parseInt(visits) + 1;
+        localStorage.setItem('visitCount', visits);
+        
+        // Pad the number for that "elegant" look (e.g. 000042)
+        countSpan.textContent = visits.toString().padStart(6, '0');
+    }
+    updateCounter();
 });
