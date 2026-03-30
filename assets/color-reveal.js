@@ -6,7 +6,6 @@
 			bubble.style.left = left + 'px';
 			bubble.style.top = top + 'px';
 			bubble.style.right = 'auto';
-			bubble.style.zIndex = '10000';
 		}
 		// Hover: colorize
 		img.addEventListener('mouseenter', ()=>{
@@ -52,4 +51,3 @@
 		ensureMissyWidget();
 	});
 })();
-

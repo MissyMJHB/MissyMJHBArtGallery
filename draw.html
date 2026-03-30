@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Draw - Missy Art</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <!-- Using the local html2canvas library provided -->
+    <script src="assets/html2canvas.js"></script>
+</head>
+<body class="draw-page-body">
+
+    <div id="draw-container">
+        <canvas id="drawing-canvas"></canvas>
+    </div>
+
+    <!-- Main Desktop Navigation -->
+    <nav class="main-nav" style="position: fixed; top: 10px; right: 20px; z-index: 1000; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px;">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="draw-toolbar" id="draw-toolbar">
+        <div class="toolbar-handle" id="toolbar-handle">
+            &lt;
+        </div>
+        <div class="toolbar-content">
+
+            <div class="tool-group">
+                <h3>Brushes</h3>
+                <select id="brush-type">
+                    <option value="pen">Fine Pen</option>
+                    <option value="marker">Broad Marker</option>
+                    <option value="crayon">Waxy Crayon</option>
+                    <option value="airbrush">Soft Airbrush</option>
+                    <option value="neon">Neon Glow</option>
+                    <option value="erase">Eraser</option>
+                </select>
+            </div>
+
+            <div class="tool-group">
+                <h3>Color</h3>
+                <input type="color" id="color-picker" value="#000000">
+            </div>
+
+            <div class="tool-group">
+                <h3>Size</h3>
+                <input type="range" id="brush-size" min="1" max="100" value="5">
+            </div>
+
+            <div class="tool-group">
+                <h3>Coloring Pages</h3>
+                <select id="coloring-page-select">
+                    <option value="">-- Select a Page --</option>
+                    <option value="assets/coloringpages/butterfly1.png">Butterfly</option>
+                    <option value="assets/coloringpages/cut1.png">Flower Design 1</option>
+                    <option value="assets/coloringpages/cut2.png">Flower Design 2</option>
+                    <option value="assets/coloringpages/easter.png">Easter Scene</option>
+                    <option value="assets/coloringpages/easteregg.png">Easter Egg</option>
+                    <option value="assets/coloringpages/fairy3.png">Fairy</option>
+                    <option value="assets/coloringpages/fairywoods.png">Fairy Woods</option>
+                    <option value="assets/coloringpages/flower2.png">Wildflowers</option>
+                    <option value="assets/coloringpages/flowers.png">Spring Flowers</option>
+                    <option value="assets/coloringpages/frog1.png">Frog</option>
+                    <option value="assets/coloringpages/gecko1.png">Gecko</option>
+                    <option value="assets/coloringpages/knome1.png">Gnome 1</option>
+                    <option value="assets/coloringpages/knome2.png">Gnome 2</option>
+                    <option value="assets/coloringpages/knome3.png">Gnome 3</option>
+                    <option value="assets/coloringpages/love1.png">Love Heart</option>
+                    <option value="assets/coloringpages/loved1.png">Loved Word Art</option>
+                    <option value="assets/coloringpages/pirate1.png">Pirate</option>
+                    <option value="assets/coloringpages/cut in 12.png">Flower Bouquet</option>
+                    <option value="assets/coloringpages/cut in 2.png">Nature Design</option>
+                    <option value="assets/coloringpages/tomorrow.png">Tomorrow Quote</option>
+                    <option value="assets/coloringpages/turtle.png">Sea Turtle 1</option>
+                    <option value="assets/coloringpages/turtle1.png">Sea Turtle 2</option>
+                    <option value="assets/coloringpages/yourself1.png">Yourself Quote</option>
+                </select>
+            </div>
+
+            <div class="tool-group">
+                <h3>Actions</h3>
+                <button id="action-undo">Undo</button>
+                <button id="action-clear">Clear All</button>
+                <button id="action-save">Save Artwork</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="assets/draw.js"></script>
+
+</body>
+</html>

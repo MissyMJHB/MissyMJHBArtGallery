@@ -1,0 +1,31 @@
+backend:
+  name: github
+  repo: MissyMJHB/MissyMJHBArtGallery  # owner/repo
+  branch: main # Branch to commit to, use PR mode if desired
+  auth_type: "oauth"
+  client_id: "Ov23liDWuvc6Mch8QbQm"  # Insert your GitHub OAuth App Client ID (public)
+  commit_messages:
+    create: "Add new gallery item: {{slug}}"
+    update: "Update gallery item: {{slug}}"
+    delete: "Remove gallery item: {{slug}}"
+
+media_folder: "gallery" # Folder where uploaded images are stored
+public_folder: "/gallery"
+
+collections:
+  - name: "artworks"
+    label: "Artwork"
+    folder: "gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Caption", name: "caption", widget: "text" }
+      - { label: "Image", name: "image", widget: "image", media_library: {name: "upload"} }
+      - { label: "Date", name: "date", widget: "datetime" }
+
+# Optional: enable PR mode (recommended) to create PRs instead of committing directly
+publish_mode: "editorial_workflow"
+
+# NOTE: To use GitHub OAuth set up a GitHub OAuth app and add client_id/secret as required by your host.
+# For local testing you can use 'auth_type: implicit' with proper settings. See Decap CMS docs.

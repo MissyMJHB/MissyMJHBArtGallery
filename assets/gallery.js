@@ -1,110 +1,89 @@
-// Missy Art Gallery - Gallery Page Script
-// Loads images and captions in batches of 10, with a Load More button and grayscale/visited logic
+document.addEventListener('DOMContentLoaded', () => {
+    const galleryGrid = document.getElementById('gallery-grid');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const lightbox = document.getElementById('lightbox-overlay');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const closeButton = document.getElementById('close-lightbox');
 
+    if (!galleryGrid) return;
 
+    // --- State Management ---
+    let imagesLoaded = 0;
+    const IMAGES_PER_PAGE = 12;
+    let viewedImages = new Set(JSON.parse(localStorage.getItem('viewedImages')) || []);
 
-const IMAGES_PER_BATCH = 8;
-let currentIndex = 1;
-let maxImages = 75; // Set this to the highest gallery number
+    // --- Main Function to Display Images ---
+    function fetchAndDisplayImages() {
+        loadMoreBtn.textContent = 'Loading...';
+        loadMoreBtn.disabled = true;
 
-const galleryGrid = document.getElementById('gallery-grid');
-const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const startIndex = imagesLoaded;
+        const endIndex = startIndex + IMAGES_PER_PAGE;
+        const imagesToLoad = galleryData.slice(startIndex, endIndex);
 
-function getVisitedImages() {
-  try {
-    return JSON.parse(localStorage.getItem('visitedImages') || '[]');
-  } catch {
-    return [];
-  }
-}
+        imagesToLoad.forEach((item, index) => {
+            const url = `artgallery/${item.filename}`;
+            createGalleryItem(url, item.filename, item.caption);
+        });
 
-function setVisitedImages(arr) {
-  localStorage.setItem('visitedImages', JSON.stringify(arr));
-}
+        imagesLoaded += imagesToLoad.length;
 
-function markVisited(imgNum) {
-  const visited = getVisitedImages();
-  if (!visited.includes(imgNum)) {
-    visited.push(imgNum);
-    setVisitedImages(visited);
-  }
-}
-
-function isVisited(imgNum) {
-  return getVisitedImages().includes(imgNum);
-}
-
-function createGalleryItem(imgNum) {
-  const item = document.createElement('div');
-  item.className = 'gallery-item';
-
-  const img = document.createElement('img');
-  img.className = 'gallery-thumb' + (isVisited(imgNum) ? ' visited' : '');
-  img.src = `gallery/gallery${imgNum}.jpg`;
-  img.alt = `Artwork ${imgNum}`;
-  img.loading = 'lazy';
-  img.addEventListener('click', () => {
-    markVisited(imgNum);
-    img.classList.add('visited');
-    // Open modal popup
-    const modal = document.getElementById('image-modal');
-    const modalImg = document.getElementById('modal-img');
-    const modalCaption = document.getElementById('modal-caption');
-    modal.style.display = 'flex';
-    modalImg.src = img.src;
-    // Set caption (use loaded caption text if available)
-    modalCaption.textContent = caption.textContent || img.alt;
-  });
-// Modal close logic
-const modal = document.getElementById('image-modal');
-const modalClose = document.getElementById('modal-close');
-if (modal && modalClose) {
-  modalClose.onclick = function() {
-    modal.style.display = 'none';
-    document.getElementById('modal-img').src = '';
-  };
-  // Also close modal when clicking outside the image
-  modal.onclick = function(e) {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-      document.getElementById('modal-img').src = '';
-    }
-  };
-}
-
-  const caption = document.createElement('div');
-  caption.className = 'caption';
-  fetch(`gallery/captions/gallery${imgNum}.txt`)
-    .then(r => r.ok ? r.text() : '')
-    .then(text => { caption.textContent = text || `Artwork #${imgNum}`; })
-    .catch(() => { caption.textContent = `Artwork #${imgNum}`; });
-
-  item.appendChild(img);
-  item.appendChild(caption);
-  return item;
-}
-
-function loadImages() {
-  let loaded = 0;
-  for (let i = currentIndex; i < currentIndex + IMAGES_PER_BATCH && i <= maxImages; i++) {
-    const imgPath = `gallery/gallery${i}.jpg`;
-    fetch(imgPath, { method: 'HEAD' })
-      .then(r => {
-        if (r.ok) {
-          galleryGrid.appendChild(createGalleryItem(i));
-          loaded++;
+        // Update UI
+        if (imagesLoaded >= galleryData.length) {
+            loadMoreBtn.classList.add('hidden');
+        } else {
+            loadMoreBtn.textContent = 'Load More';
+            loadMoreBtn.disabled = false;
         }
-      });
-  }
-  currentIndex += IMAGES_PER_BATCH;
-  // For testing: always show the button
-  // if (currentIndex > maxImages) {
-  //   loadMoreBtn.style.display = 'none';
-  // }
-}
+    }
 
+    // --- Helper Functions ---
+    function createGalleryItem(url, filename, caption) {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
 
-if (galleryGrid && loadMoreBtn) {
-  loadImages();
-  loadMoreBtn.addEventListener('click', loadImages);
-}
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = 'Artwork from the gallery';
+        img.loading = 'lazy';
+
+        item.appendChild(img);
+        galleryGrid.appendChild(item);
+
+        if (viewedImages.has(filename)) {
+            item.classList.add('viewed');
+        }
+
+        item.addEventListener('click', () => openLightbox(url, filename, caption, item));
+    }
+
+    function openLightbox(url, filename, caption, galleryItem) {
+        lightboxImage.src = url;
+        lightboxCaption.textContent = caption || "";
+        lightbox.style.display = 'flex';
+
+        // Mark as viewed
+        if (!viewedImages.has(filename)) {
+            viewedImages.add(filename);
+            galleryItem.classList.add('viewed');
+            localStorage.setItem('viewedImages', JSON.stringify([...viewedImages]));
+        }
+    }
+
+    function closeLightbox() {
+        lightbox.style.display = 'none';
+    }
+
+    // --- INITIALIZATION ---
+    fetchAndDisplayImages();
+
+    loadMoreBtn.addEventListener('click', fetchAndDisplayImages);
+    closeButton.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => {
+        if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+});

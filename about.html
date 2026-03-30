@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About - Missy Art Gallery</title>
-  <link rel="stylesheet" href="assets/style.css">
-  <link rel="icon" href="assets/MissyCutOut.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Missy Art</title>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
-  <!-- Magic background effect: color wave reveal -->
-  <div id="magic-bg-container">
-    <div class="bg-layer cursed-bw"></div>
-    <div class="bg-layer magic-color"></div>
-  </div>
-  <div class="page-layout">
-    <main class="gallery-main about-slides about-page-bg">
-      <!-- Removed duplicate heading -->
-      <div class="about-slides-container">
-        <img src="assets/about1.png" alt="About Slide 1" class="about-slide">
-        <img src="assets/about2.png" alt="About Slide 2" class="about-slide">
-        <img src="assets/about3.png" alt="About Slide 3" class="about-slide">
-        <img src="assets/about4.png" alt="About Slide 4" class="about-slide">
-      </div>
-      <!-- Placeholder text removed -->
-    </main>
-    <aside class="sidebar-nav">
-      <nav class="side-links">
+<body class="scrollable">
+
+    <div class="page-container">
+        <main class="main-content">
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="draw.html">Draw</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <!-- Scrolling Image Sections -->
+            <div class="about-container">
+                <section class="about-section">
+                    <img src="assets/about1.png" alt="About the artist, part 1">
+                </section>
+                <section class="about-section">
+                    <img src="assets/about2.png" alt="About the artist, part 2">
+                </section>
+                <section class="about-section">
+                    <img src="assets/about3.png" alt="About the artist, part 3">
+                </section>
+                <section class="about-section">
+                    <img src="assets/about4.png" alt="About the artist, part 4">
+                </section>
+            </div>
+        </main>
+
+        <!-- Desktop Sidebar -->
+        <aside class="sidebar">
+            <h1>About the Artist</h1>
+        </aside>
+    </div>
+
+    <nav class="mobile-nav">
         <a href="index.html">Home</a>
         <a href="gallery.html">Gallery</a>
-        <a href="about.html">About</a>
+        <a href="draw.html">Draw</a>
         <a href="contact.html">Contact</a>
-        <a href="blank-canvas.html">Draw</a>
-      </nav>
-      <div class="vertical-heading-flex">
-        <span>About the Artist</span>
-      </div>
-      <!-- Missy widget removed -->
-    </aside>
-  </div>
-  <!-- Missy widget script removed -->
-  <!-- hamburger.js removed -->
+    </nav>
+
 </body>
 </html>
